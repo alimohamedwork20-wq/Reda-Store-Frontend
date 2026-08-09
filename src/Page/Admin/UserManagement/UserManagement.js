@@ -145,7 +145,7 @@ const UserManagement = () => {
     });
     setIsModalOpen(true);
   };
-
+  console.log(users);
   const closeModal = () => setIsModalOpen(false);
   return (
     <div className="user-card">

@@ -30,7 +30,7 @@ export default function Login() {
         ath_1854: userData.avatar || null,
         tfh_1854: userData.two_Factor,
       });
-      if (userData.status) {
+      if (!userData.status) {
         if (!userData.two_Factor) {
           showSuccess(`Welcome back, ${userData.name}!`);
           navigate("/", { replace: true });
