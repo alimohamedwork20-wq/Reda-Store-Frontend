@@ -30,11 +30,15 @@ export default function Login() {
         ath_1854: userData.avatar || null,
         tfh_1854: userData.two_Factor,
       });
-      if (!userData.two_Factor) {
-        showSuccess(`Welcome back, ${userData.name}!`);
-        navigate("/", { replace: true });
+      if (userData.status) {
+        if (!userData.two_Factor) {
+          showSuccess(`Welcome back, ${userData.name}!`);
+          navigate("/", { replace: true });
+        } else {
+          navigate("/two-factor-auth", { replace: true });
+        }
       } else {
-        navigate("/two-factor-auth", { replace: true });
+        showError("الحساب معطل");
       }
     } catch (error) {
       console.error("Login error:", error);
