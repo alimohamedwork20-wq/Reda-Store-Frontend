@@ -1,21 +1,19 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./ProductDetails.css";
 import SlideProducts from "../../Components/SlideProducts/SlideProducts";
-import Loading from "../../Components/Loading";
+import Loading from "../../Components/Loading/Loading";
 import Product_img from "./Product_img";
 import Product_info from "./Product_info";
-import PageTransition from "../../Components/PageTransition";
+import PageTransition from "../../Components/Helper/PageTransition";
+import { accountService } from "../../Components/Apis/accountService";
 export default function ProductsDetails() {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
   const path = Number(id);
 
   useEffect(() => {
-    axios
-      .get(`https://dummyjson.com/product/${path}`)
-      .then((data) => setProduct(data.data));
+    accountService.GetProductById(path).then((data) => setProduct(data.data));
   }, [id]);
   if (!product) {
     return (
@@ -24,7 +22,6 @@ export default function ProductsDetails() {
       </div>
     );
   }
-
   return (
     <PageTransition key={id}>
       {" "}
@@ -39,9 +36,9 @@ export default function ProductsDetails() {
         {/* Slide Products */}
         <SlideProducts
           path={"/product"}
-          api={product.category}
+          api={product.category.slug}
           style={{ paddingTop: "10%" }}
-          title={`${product.category}:`}
+          title={`${product.category.slug}:`}
         ></SlideProducts>
       </div>
     </PageTransition>

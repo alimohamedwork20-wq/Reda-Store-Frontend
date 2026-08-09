@@ -1,62 +1,78 @@
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Headers.css";
+import toast from "react-hot-toast";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
+import CryptoJS from "crypto-js";
+import { getSecureCookie } from "../Helper/cookieUtils";
 export default function ButtonHeaders() {
   const [productsList, setProductsList] = useState([]);
   const [categoryActiv, setCategoryActiv] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const path = useLocation();
+  const userRole = getSecureCookie("rth_1854");
+  const token = getSecureCookie("tth_1854");
+
+  // إغلاق قائمة الأقسام فور تغيير المسار (URL)
   useEffect(() => {
     setCategoryActiv(false);
-  }, [window.location.pathname]);
+  }, [path.pathname]);
+
   useEffect(() => {
     fetch("https://dummyjson.com/products/categories")
       .then((res) => res.json())
       .then((data) => setProductsList(data));
   }, []);
+
   const navLinks = [
     { title: "Home", link: "/" },
     { title: "About", link: "/about" },
-    { title: "Accessories", link: "/accessories" },
     { title: "Blog", link: "/blog" },
     { title: "Contact", link: "/contact" },
+    { title: "Setting", link: "/setting" },
   ];
-  const path = useLocation();
-  // عرض الشاشه
+
+  const filteredLinks =
+    userRole === "Admin"
+      ? [...navLinks, { title: "Dashboard", link: "/admin" }]
+      : navLinks;
+
   const [width, setWidth] = useState(window.innerWidth);
-  const categoryRef = useRef();
+
+  // 👈 المرجع هنا ليشمل الزرار والقائمة معاً
+  const categoryNavRef = useRef();
+
   useEffect(() => {
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-    };
-
+    const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const navRef = useRef();
+
+  // ✅ إغلاق القائمة عند الضغط خارج الـ category-nav بكتمله
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (categoryRef.current && !categoryRef.current.contains(e.target)) {
+      if (
+        categoryNavRef.current &&
+        !categoryNavRef.current.contains(e.target)
+      ) {
         setCategoryActiv(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <div className="buttom-header">
       <div className="container">
-        <nav ref={navRef}>
-          <div className="category-nav">
-            {" "}
+        <nav>
+          {/* ✅ نقل الـ ref هنا ليشمل الزرار والقائمة معاً */}
+          <div className="category-nav" ref={categoryNavRef}>
             <div
-              onClick={() => setCategoryActiv(!categoryActiv)}
+              onClick={() => setCategoryActiv((prev) => !prev)}
               className="category-btn"
             >
               <i className="fa-solid fa-bars"></i>
@@ -67,8 +83,8 @@ export default function ButtonHeaders() {
                 <i className="fa-solid fa-sort-up"></i>
               )}
             </div>
+
             <div
-              ref={categoryRef}
               className={
                 categoryActiv ? "category-select actives" : "category-select"
               }
@@ -77,21 +93,23 @@ export default function ButtonHeaders() {
                 <Link
                   onClick={() => setCategoryActiv(false)}
                   key={index}
-                  to={`category/${item.slug}`}
+                  to={`/category/${item.slug}`} // ✅ أضفنا / لتفادي أخطاء الـ Relative path
                 >
                   {item.name}
                 </Link>
               ))}
             </div>
           </div>
+
           {width < 1090 && (
             <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
               <i className="fa-solid fa-bars"></i>
             </div>
           )}
+
           {width > 1090 ? (
             <div className="category-list">
-              {navLinks.map((item, index) => (
+              {filteredLinks.map((item, index) => (
                 <li
                   key={index}
                   className={path.pathname === item.link ? "active" : ""}
@@ -102,18 +120,14 @@ export default function ButtonHeaders() {
             </div>
           ) : (
             <div className={`category-list ${menuOpen ? "open" : ""}`}>
-              {navLinks.map((item, index) => (
+              {filteredLinks.map((item, index) => (
                 <Link
+                  key={index}
                   style={{ color: "white" }}
                   onClick={() => setMenuOpen(false)}
                   to={item.link}
                 >
-                  <li
-                    key={index}
-                    className={path.pathname === item.link ? "active" : ""}
-                    // يقفل بعد الضغط
-                  >
-                    {" "}
+                  <li className={path.pathname === item.link ? "active" : ""}>
                     {item.title}
                   </li>
                 </Link>
@@ -122,8 +136,22 @@ export default function ButtonHeaders() {
           )}
 
           <div className="sign-icons">
-            <i className="fa-solid fa-arrow-right-from-bracket"></i>
-            <i className="fa-solid fa-user-plus"></i>
+            {token ? (
+              ""
+            ) : (
+              <>
+                <Link to="/login">
+                  <Tippy content="Login" placement="bottom">
+                    <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                  </Tippy>
+                </Link>{" "}
+                <Link to="/register">
+                  <Tippy content="Register" placement="bottom">
+                    <i className="fa-solid fa-user-plus"></i>
+                  </Tippy>
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </div>

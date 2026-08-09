@@ -1,0 +1,180 @@
+.add-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f4f7f9;
+  min-height: calc(100vh - 150px);
+}
+
+.add-card-wrapper {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 480px;
+}
+
+.add-card-wrapper h2 {
+  text-align: center;
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* بطاقة الفيزا التفاعلية */
+.credit-card-preview {
+  width: 100%;
+  height: 210px;
+  background: linear-gradient(135deg, #0088ff, #0055b3);
+  border-radius: 16px;
+  padding: 22px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0, 136, 255, 0.35);
+  margin-bottom: 30px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.credit-card-preview.mastercard {
+  background: linear-gradient(135deg, #1e1e1e, #3a3a3a);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.credit-card-preview.meeza {
+  background: linear-gradient(135deg, #006837, #1b365d);
+  box-shadow: 0 8px 24px rgba(0, 104, 55, 0.3);
+}
+
+.credit-card-preview.amex {
+  background: linear-gradient(135deg, #0077a2, #00425a);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chip {
+  width: 45px;
+  height: 34px;
+  background: linear-gradient(135deg, #ffe066, #d4af37);
+  border-radius: 6px;
+}
+
+.card-brand-logo {
+  height: 35px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.card-number-display {
+  font-size: 20px;
+  letter-spacing: 2.5px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-bottom span {
+  font-size: 10px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  display: block;
+}
+
+.card-bottom p {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 2px;
+  letter-spacing: 1px;
+}
+
+/* الفورم */
+.card-form .form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-form label {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.card-form input {
+  padding: 12px 14px;
+  border: 1.5px solid #e1e8ed;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.card-form input:focus {
+  border-color: #0088ff;
+}
+
+/* خانة الرقم مع اللوجو */
+.input-with-logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-logo input {
+  width: 100%;
+  padding-right: 50px;
+}
+
+.input-card-logo {
+  position: absolute;
+  right: 12px;
+  height: 24px;
+  width: 36px;
+  object-fit: contain;
+}
+
+/* الصف المزدوَج للتاريخ و CVV */
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.save-card-btn {
+  width: 100%;
+  padding: 14px 14px;
+  background-color: #0088ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  height: 60px;
+  margin-top: 10px;
+  transition: background 0.3s;
+}
+.save-card-btn:hover {
+  background-color: #0066cc;
+}

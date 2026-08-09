@@ -1,183 +1,175 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./About.css";
-import PageTransition from "../../Components/PageTransition";
+import PageTransition from "../../Components/Helper/PageTransition";
+import Footer from "../../Components/Footer/Footer";
 
 export default function About() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          } else {
+            entry.target.classList.remove("revealed");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -60px 0px" },
+    );
+
+    const elements = document.querySelectorAll(".reveal-on-scroll");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => elements.forEach((el) => observer.unobserve(el));
+  }, []);
+
   return (
     <PageTransition>
-      {" "}
-      <div className="about-page">
-        {/* HERO */}
-        <section
+      <div className="about-modern-container">
+        {/* 1. PREMIUM HERO SECTION */}
+        <header
+          className="brand-hero"
           style={{
-            backgroundImage: `linear-gradient(rgba(24, 111, 210, 0.32), rgba(255, 255, 255, 0.03)), url(${process.env.PUBLIC_URL}/img/pexels-siljeao-264851155-35560482.jpg)`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
+            backgroundImage: `linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.7)), url(${process.env.PUBLIC_URL}/img/pexels-siljeao-264851155-35560482.jpg)`,
           }}
-          className="about-hero section"
         >
-          <h1 className="text-primary">نحن نبني تجربة تسوق ذكية 🚀</h1>
-          <p>
-            منصة عربية حديثة تهدف لتقديم تجربة تسوق سريعة، آمنة، وسهلة لكل
-            المستخدمين.
-          </p>
-        </section>
-
-        {/* 1 LEFT TEXT / RIGHT ANIMATION */}
-        <section className="about-row section">
-          <div className="text left">
-            <h2>
-              <i className="fa-solid fa-arrows-down-to-people"></i> مهمتنا
-            </h2>
+          <div className="hero-blur-glow"></div>
+          <div className="hero-inner-content">
+            <span className="brand-badge">تعرّف علينا</span>
+            <h1>
+              نعيد تعريف تجربة <br />
+              <span>التسوق الرقمي</span>
+            </h1>
             <p>
-              نعمل على تحسين تجربة التسوق عبر الإنترنت من خلال توفير منتجات
-              موثوقة، وخدمة سريعة، وتجربة مستخدم سلسة تناسب الجميع.
+              منصة ذكية متكاملة، جُمعت بأحدث التقنيات لتمنحك رحلة تسوق آمنة،
+              فائقة السرعة، وتلبي أدق تطلعاتك.
             </p>
-          </div>
-
-          <div className="animation right">
-            {/* مكان الأنيميشن */}
-            <div className="anim-box">
-              <dotlottie-wc
-                src="https://lottie.host/27c77862-dbaf-4c94-91a8-411c404bcae0/RVXJFA1OtR.lottie"
-                style={{ width: 300, height: 300 }}
-                autoPlay=""
-                loop=""
-              />
+            <div className="hero-stats-strip">
+              <div className="strip-item">
+                <strong>+10K</strong>
+                <span>عميل نشط</span>
+              </div>
+              <div className="strip-divider"></div>
+              <div className="strip-item">
+                <strong>+5K</strong>
+                <span>منتج أصلي</span>
+              </div>
+              <div className="strip-divider"></div>
+              <div className="strip-item">
+                <strong>99%</strong>
+                <span>نسبة الرضا</span>
+              </div>
             </div>
           </div>
-        </section>
+        </header>
 
-        {/* 2 RIGHT TEXT / LEFT ANIMATION */}
-        <section className="about-row reverse section">
-          <div className="text right">
-            <h2>
-              <i className="fa-solid fa-eye"></i> رؤيتنا
-            </h2>
-            <p>
-              أن نكون من أكبر منصات التجارة الإلكترونية في العالم العربي مع
-              التركيز على الجودة والثقة والسرعة في الأداء.
-            </p>
-          </div>
-
-          <div className="animation left">
-            <div className="anim-box">
-              <dotlottie-wc
-                src="https://lottie.host/781a4b9f-eb64-4b1c-a56b-895d4cf477e7/V6PJYHKRRY.lottie"
-                style={{ width: 300, height: 300 }}
-                autoPlay=""
-                loop=""
-              />
+        {/* 2. OUR STORY & PHILOSOPHY */}
+        <section className="story-philosophy-section reveal-on-scroll">
+          <div className="story-grid">
+            <div className="story-meta">
+              <h2 className="section-subtitle-neon">
+                Our Story and Philosophy
+              </h2>
+              <h3 style={{ color: "#217de6da" }}>
+                نحن لا نبيع المنتجات، <br />
+                بل نصنع تجربة موثوقة.
+              </h3>
             </div>
-          </div>
-        </section>
-
-        {/* 3 LEFT TEXT / RIGHT ANIMATION */}
-        <section className="about-row section">
-          <div className="text left">
-            <h2>
-              <i className="fa-solid fa-person-circle-question"></i> لماذا نحن
-            </h2>
-            <p>
-              لأننا نوفر تجربة متكاملة تشمل السرعة، الأمان، دعم العملاء، وأسعار
-              تنافسية تناسب الجميع.
-            </p>
-          </div>
-
-          <div className="animation right">
-            <div className="anim-box">
-              <dotlottie-wc
-                src="https://lottie.host/39cf463e-dd56-4f92-8bd7-7598084ab017/eo4CqKKeTP.lottie"
-                style={{ width: 300, height: 300 }}
-                autoPlay=""
-                loop=""
-              />
-            </div>
-          </div>
-        </section>
-        {/* 4 LEFT TEXT / RIGHT ANIMATION */}
-        <section className="about-row reverse section">
-          <div className="text left">
-            <h2>
-              <i className="fa-solid fa-users"></i> فريق العمل
-            </h2>
-            <p>
-              فريقنا… حيث يتحول التعاون إلى إنجاز معًا نصنع الفرق ونحقق النجاح
-              نعمل بروح واحدة نحو هدف واحد التميز ليس خيارًا… بل أسلوب عملنا قوة
-              فريقنا في وحدة رؤيتنا
-            </p>
-          </div>
-
-          <div className="animation right">
-            <div className="anim-box">
-              <dotlottie-wc
-                src="https://lottie.host/dc9a2f8e-78cf-4845-81bd-64495df1b879/rtahCF7sV9.lottie"
-                style={{ width: 300, height: 300 }}
-                autoPlay=""
-                loop=""
-              />
+            <div className="story-text-block">
+              <p>
+                بدأت فكرتنا من فجوة واضحة في السوق العربي: المستهلك يستحق تجربة
+                تسوق تخلو من التعقيد، الشحن البطيء، أو المنتجات غير المضمونة.
+                لذلك قمنا ببناء هذه المنصة من الصفر لتكون الإجابة الذكية لكل هذه
+                التحديات.
+              </p>
+              <p>
+                رؤيتنا لا تتوقف عند حدود التجارة الإلكترونية التقليدية، بل نتحرك
+                باستمرار نحو دمج حلول الذكاء الاصطناعي والتصفح الانسيابي لنجعل
+                من كل نقرة على منصتنا رحلة ممتعة وآمنة تماماً.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* FEATURES */}
-        <section className="about-features section">
-          <h2 style={{ color: "#1ea3e1" }}>
-            <i className="fa-solid fa-face-grin-stars"></i> مميزاتنا
-          </h2>
+        {/* 3. CORE VALUES (GLASSMORPHISM CARDS) */}
+        <section className="core-values-section reveal-on-scroll">
+          <div className="section-header-center">
+            <h2 className="section-subtitle-neon">Key Pillars</h2>
+            <h3 style={{ color: "#217de6da" }}>
+              المبادئ التي تحرك فريقنا يومياً
+            </h3>
+          </div>
 
-          <div className="features-grid">
-            <div className="feature">
-              <i className="fa-solid fa-award"></i> سرعة عالية
+          <div className="values-cards-grid">
+            <div className="value-glass-card">
+              <div className="card-icon-box">
+                <i className="fa-solid fa-arrows-down-to-people"></i>
+              </div>
+              <h4 style={{ color: "#217de6da" }}>Our Mission and Goal</h4>
+              <p>
+                تمكين المتسوق العربي وتوفير تجربة مستخدم سلسة وعادلة تناسب
+                احتياجات الجميع دون استثناء.
+              </p>
             </div>
-            <div className="feature">
-              <i className="fa-solid fa-file-shield"></i> أمان كامل
+            <div className="value-glass-card">
+              <div className="card-icon-box">
+                <i className="fa-solid fa-eye"></i>
+              </div>
+              <h4 style={{ color: "#217de6da" }}>Our Future Vision</h4>
+              <p>
+                أن نصبح الواجهة التكنولوجية الأولى والمنصة الأكثر ابتكاراً
+                وموثوقية في الشرق الأوسط.
+              </p>
             </div>
-            <div className="feature">
-              <i className="fa-solid fa-magnifying-glass-dollar"></i> أسعار
-              منافسة
-            </div>
-            <div className="feature">
-              <i className="fa-solid fa-people-carry-box"></i> شحن سريع
-            </div>
-            <div className="feature">
-              <i className="fa-solid fa-handshake-angle"></i> دعم 24/7
-            </div>
-            <div className="feature">
-              <i className="fa-solid fa-arrows-rotate"></i> استرجاع سهل
+            <div className="value-glass-card">
+              <div className="card-icon-box">
+                <i className="fa-solid fa-users"></i>
+              </div>
+              <h4 style={{ color: "#217de6da" }}>One-team spirit</h4>
+              <p>
+                نعمل ببيئة مرنة ومبدعة، حيث يتحول شغف المطورين والمهندسين إلى
+                كود ومميزات تخدمك.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* STATS */}
-        <section className="about-stats section">
-          <div className="stat">
-            <h3>10K+</h3>
-            <p>
-              <i className="fa-regular fa-user"></i> عميل سعيد
-            </p>
+        {/* 4. PREMIUM FEATURES GRID */}
+        <section className="premium-features-section reveal-on-scroll">
+          <div className="section-header-center">
+            <h2 className="section-subtitle-neon">What sets us apart</h2>
+            <h3 style={{ color: "#217de6da" }}>لماذا يختارنا الآلاف؟</h3>
           </div>
-          <div className="stat">
-            <h3>5K+</h3>
-            <p>
-              <i className="fa-solid fa-box-open"></i> منتج
-            </p>
-          </div>
-          <div className="stat">
-            <h3>99%</h3>
-            <p>
-              <i className="fa-solid fa-users"></i> رضا العملاء
-            </p>
-          </div>
-          <div className="stat">
-            <h3>24/7</h3>
-            <p>
-              دعم فني <i className="fa-solid fa-hand-holding-medical"></i>
-            </p>
+
+          <div className="modern-features-grid">
+            <div className="m-feature-card">
+              <i className="fa-solid fa-file-shield"></i>
+              <h5>Protection and absolute security</h5>
+              <p>تشفير كامل لبياناتك وحلول دفع إلكتروني بمعايير أمان عالمية.</p>
+            </div>
+            <div className="m-feature-card">
+              <i className="fa-solid fa-bolt"></i>
+              <h5>Ultra-fast performance</h5>
+              <p>
+                تصفح ذكي وسريع بدون أي وقت انتظار بفضل بنيتنا البرمجية الحديثة.
+              </p>
+            </div>
+            <div className="m-feature-card">
+              <i className="fa-solid fa-truck-fast"></i>
+              <h5>Smart Logistics</h5>
+              <p>نظام شحن متطور يتتبع طلبك خطوة بخطوة ويصلك في وقت قياسي.</p>
+            </div>
+            <div className="m-feature-card">
+              <i className="fa-solid fa-headset"></i>
+              <h5>Real Technical Support</h5>
+              <p>فريق كامل في خدمتك على مدار الساعة لحل أي مشكلة فوراً.</p>
+            </div>
           </div>
         </section>
       </div>
+
+      <Footer></Footer>
     </PageTransition>
   );
 }

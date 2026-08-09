@@ -11,10 +11,10 @@ export default function Product_img({ product }) {
       <div className="sm-img">
         {product?.images?.map((item, index) => (
           <img
-            className={`${active === item ? "activ" : ""}`}
-            onClick={() => setActive(item)}
+            className={`${active === item.imageUrl ? "activ" : ""}`}
+            onClick={() => setActive(item.imageUrl)}
             key={index}
-            src={item}
+            src={item.imageUrl}
             alt=""
           ></img>
         ))}

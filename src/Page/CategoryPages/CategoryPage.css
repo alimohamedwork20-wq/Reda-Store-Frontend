@@ -1,0 +1,114 @@
+.category-products .product-card {
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.category-products .product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.products-grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.product-card {
+  width: 18rem;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  height: fit-content; /* لكي يتمدد الكارت تلقائياً عند الضغط على Show More */
+}
+
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* الوصف الافتراضي (سطرين فقط) */
+.product-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 8px 0 4px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* في حالة الضغط على Show More يتم إزالة الاقتطاع */
+.product-desc.expanded {
+  display: block;
+  overflow: visible;
+  text-overflow: unset;
+}
+.category-products .product-card .product-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+/* تصميم زر Show More */
+.show-more-btn {
+  background: none;
+  border: none;
+  color: #1d99f2;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 12px;
+  text-align: right;
+  width: fit-content;
+}
+
+.show-more-btn:hover {
+  text-decoration: underline;
+}
+
+.product-price-section {
+  margin-top: auto;
+  padding-top: 5px;
+}
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0 20px 0;
+  width: 100%;
+}
+
+/* تنسيق زر Show More Products */
+.load-more-products-btn {
+  background-color: #1d99f2;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(29, 153, 242, 0.3);
+}
+
+.load-more-products-btn:hover {
+  background-color: #1572b6;
+  transform: translateY(-2px);
+}
+
+.load-more-products-btn:active {
+  transform: translateY(0);
+}

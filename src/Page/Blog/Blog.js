@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Blog.css";
 import LoadingBlog from "./LoadingBlog";
-import PageTransition from "../../Components/PageTransition";
+import PageTransition from "../../Components/Helper/PageTransition";
 export default function Blog() {
   const [openId, setOpenId] = useState(null);
 
@@ -12,77 +12,77 @@ export default function Blog() {
   const data = [
     {
       id: 1,
-      title: "أفضل منتجات 2026",
+      title: "Best products of 2026",
       text: "تعرف على أفضل المنتجات.",
       content:
         "في عام 2026 ظهرت منتجات قوية جدًا في السوق، خاصة في مجال الهواتف الذكية والأجهزة المنزلية...",
     },
     {
       id: 2,
-      title: "نصائح قبل الشراء",
+      title: "Tips before purchasing",
       text: "اختار صح.",
       content:
         "قبل ما تشتري أي منتج، لازم تقارن بين أكتر من موقع وتشوف تقييمات الناس...",
     },
     {
       id: 3,
-      title: "أفضل العروض",
+      title: "Best offers",
       text: "خصومات.",
       content:
         "العروض بتيجي في مواسم معينة زي الجمعة البيضاء أو بداية السنة...",
     },
     {
       id: 4,
-      title: "موبايلات",
+      title: "Mobiles",
       text: "أفضل الهواتف.",
       content:
         "اختيار الموبايل بيعتمد على استخدامك: الكاميرا أو المعالج أو البطارية...",
     },
     {
       id: 5,
-      title: "إلكترونيات",
+      title: "Electronics",
       text: "أجهزة حديثة.",
       content: "الأجهزة الإلكترونية بقت جزء أساسي من حياتنا اليومية...",
     },
     {
       id: 6,
-      title: "منزل",
+      title: "House",
       text: "أدوات.",
       content: "الأدوات المنزلية الحديثة بتوفر وقت ومجهود كبير...",
     },
     {
       id: 7,
-      title: "أزياء",
+      title: "Fashion",
       text: "موضة.",
       content: "موضة 2026 بتميل للبساطة والألوان الهادية...",
     },
     {
       id: 8,
-      title: "عروض",
+      title: "Offers",
       text: "خصومات.",
       content: "تابع العروض الأسبوعية لأنها بتكون قوية جدًا...",
     },
     {
       id: 9,
-      title: "لابتوبات",
+      title: "Laptops",
       text: "أجهزة قوية.",
       content: "اللابتوب لازم يكون مناسب لاستخدامك سواء دراسة أو شغل...",
     },
     {
       id: 10,
-      title: "إكسسوارات",
+      title: "Accessories",
       text: "أدوات.",
       content: "الإكسسوارات بتفرق جدًا في تجربة الاستخدام اليومية...",
     },
     {
       id: 11,
-      title: "مقارنات",
+      title: "Comparisons",
       text: "اختار الأفضل.",
       content: "المقارنة بين المنتجات بتساعدك تاخد قرار صح...",
     },
     {
       id: 12,
-      title: "تسوق",
+      title: "Shopping",
       text: "نصائح.",
       content: "حدد ميزانيتك واستخدم العروض والكوبونات...",
     },
@@ -122,16 +122,14 @@ function BlogCard({ item, isOpen, toggle }) {
           {!imgLoaded && <LoadingBlog />}
 
           <img
-            src={process.env.PUBLIC_URL + `/img/blog${item.id}.jpg`}
+            src={process.env.PUBLIC_URL + `/img/blog${item.id}.png`}
+            // src={process.env.PUBLIC_URL + `/img/blog${item.id}.webp`}
             alt={item.title}
             loading="lazy"
             onLoad={() => setImgLoaded(true)}
             style={{
               opacity: imgLoaded ? 1 : 0,
               transition: "0.3s",
-              width: "100%",
-              height: "200px",
-              objectFit: "cover",
             }}
           />
         </div>

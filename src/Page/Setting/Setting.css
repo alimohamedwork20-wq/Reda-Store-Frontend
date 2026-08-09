@@ -1,0 +1,56 @@
+.container-setting {
+  width: 100%;
+  min-height: calc(100vh - 120px);
+}
+
+.container-setting .content {
+  display: flex;
+  width: 70%;
+  margin: auto;
+  margin-top: 5%; /* قللت الـ 10% شوية عشان الديزاين يكون مرتاح فوق */
+  height: 600px; /* 👈 ثبتنا طول الصندوق الأب الكلي */
+  border-radius: 12px; /* لقطة شياكة للحواف الخارجية */
+  overflow: hidden; /* عشان الحواف المقصوصة تبان نظيفة مع الخلفيات */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* ظل خفيف يدي عمق للديزاين */
+}
+
+.container-settingLeft {
+  width: 25%;
+  background-color: rgb(32, 147, 255);
+}
+
+.container-settingLeft ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.container-settingLeft ul li {
+  text-wrap: nowrap;
+  background-color: white;
+  width: 100%;
+  padding: 30px 30px 30px 10px;
+  background-color: rgb(32, 147, 255);
+  color: white;
+  cursor: pointer;
+}
+
+.container-settingLeft ul li:last-child {
+  padding: 30px 30px 27px 10px;
+}
+
+.container-settingLeft ul li:hover {
+  background-color: rgb(14, 137, 252);
+}
+
+/* ➡️ التعديل السحري للناحية اليمين بس هنا 👇 */
+.container-settingRight {
+  width: 75%;
+  background-color: aliceblue;
+  height: 100%; /* تاخد كامل طول الأب الثابت */
+  overflow-y: auto; /* 👈 السكرول يظهر هنا "فقط" تلقائياً لما البيانات تكتر عن الـ 600px */
+  padding: 30px; /* مسافة داخلية مريحة عشان الفورم متلزقش في الحواف */
+  box-sizing: border-box; /* عشان الـ padding ميزودش عرض الـ 75% */
+}

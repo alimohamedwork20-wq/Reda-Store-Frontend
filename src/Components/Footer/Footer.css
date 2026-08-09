@@ -1,0 +1,192 @@
+.site-footer {
+  background-color: #ffffff;
+  color: #0f172a;
+  border-top: 1px solid rgba(2, 132, 199, 0.12);
+  font-family: "Cairo", sans-serif;
+  direction: rtl;
+  padding-top: 70px;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 5% 50px 5%;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+  gap: 40px;
+}
+
+.footer-col h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0284c7;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.footer-logo h2 {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin-bottom: 15px;
+}
+
+.footer-logo span {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-col p,
+.newsletter-col p {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* Social Icons */
+.social-links {
+  display: flex;
+  gap: 12px;
+}
+
+.social-links a {
+  width: 38px;
+  height: 38px;
+  background: rgba(2, 132, 199, 0.08);
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.social-links a:hover {
+  background: #0284c7;
+  color: #ffffff;
+  transform: translateY(-3px);
+}
+
+/* Links List */
+.links-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.links-col ul li {
+  margin-bottom: 12px;
+}
+
+.links-col ul li a {
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition:
+    color 0.2s ease,
+    padding-right 0.2s ease;
+}
+
+.links-col ul li a:hover {
+  color: #0284c7;
+  padding-right: 5px;
+}
+
+/* Newsletter Form */
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.newsletter-form input {
+  padding: 12px 15px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  border-radius: 10px;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: "Cairo", sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.newsletter-form input:focus {
+  border-color: #0284c7;
+}
+
+.newsletter-form button {
+  padding: 12px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    opacity 0.3s ease,
+    transform 0.2s ease;
+}
+
+.newsletter-form button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  background-color: #f8fafc;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  padding: 20px 0;
+}
+
+.footer-bottom-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom p {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.payment-methods {
+  display: flex;
+  gap: 15px;
+  font-size: 1.8rem;
+  color: #64748b;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 1024px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    text-align: center;
+  }
+  .social-links {
+    justify-content: center;
+  }
+  .footer-bottom-container {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}

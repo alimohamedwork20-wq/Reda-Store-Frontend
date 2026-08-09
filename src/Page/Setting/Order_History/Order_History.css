@@ -1,0 +1,186 @@
+.orders-container {
+  padding: 10px;
+  width: 100%;
+  color: #333;
+}
+
+.orders-container h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.orders-container .subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* كارت الأوردر الكلي */
+.order-item-card {
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
+  transition: 0.2s ease;
+}
+
+.order-item-card:hover {
+  border-color: #cbd5e1;
+}
+
+/* السطر الرئيسي للبيانات */
+.order-main-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  padding: 20px;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.price-text {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+/* 🏷️ الـ Badges بتاعة الحالات */
+.status-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  width: fit-content;
+  text-align: center;
+}
+
+.status-processing {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.status-delivered {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status-cancelled {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* زرار عرض التفاصيل */
+.view-details-btn {
+  background: none;
+  border: none;
+  color: #2093ff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}
+
+.view-details-btn:hover {
+  color: #0e89fc;
+}
+
+/* 📂 جزء التفاصيل المنسدلة */
+.order-details-dropdown {
+  background-color: #f8fafc;
+  border-top: 1px solid #f1f5f9;
+  padding: 20px;
+  animation: slideDown 0.2s ease-in-out;
+}
+
+.order-details-dropdown h5 {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* جدول تفاصيل المنتجات داخل الأوردر */
+.details-table-wrapper {
+  width: 100%;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.details-table th {
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 10px 15px;
+  font-weight: 600;
+}
+
+.details-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+
+.details-table tr:last-child td {
+  border-bottom: none;
+}
+
+.product-name-td {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.no-orders {
+  text-align: center;
+  color: #888;
+  padding: 40px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

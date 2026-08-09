@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Contact.css";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import PageTransition from "../../Components/PageTransition";
-
+import PageTransition from "../../Components/Helper/PageTransition";
+import { accountService } from "../../Components/Apis/accountService";
+import { showError, showSuccess } from "../../Components/Helper/toastCustom";
 export default function Contact() {
   const location = useNavigate();
   const [form, setForm] = useState({
@@ -26,11 +26,12 @@ export default function Contact() {
     e.preventDefault();
 
     if (!form.name || !form.email || !form.message) {
-      toast.error("Please fill all fields");
+      showError("Please fill in all fields");
       return;
     }
+    accountService.contact(form.name, form.email, form.message);
     location("succes-content");
-    toast.success("Message sent successfully");
+    showSuccess("Message sent successfully");
     playSound();
     setForm({
       name: "",

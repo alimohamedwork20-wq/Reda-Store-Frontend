@@ -1,0 +1,140 @@
+/* src/components/UserManagement/UserManagement.css */
+.user-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-add {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: right;
+}
+
+.user-table th,
+.user-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.role-badge {
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.status-badge.active {
+  background: #dcfce7;
+  color: #15803d;
+}
+.status-badge.inactive {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.btn-action {
+  border: none;
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.btn-action.edit {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+.btn-action.delete {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Modal CSS */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-content input,
+.modal-content select {
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-save {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  flex: 1;
+}
+.btn-cancel {
+  background: #e2e8f0;
+  color: #475569;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  flex: 1;
+}
