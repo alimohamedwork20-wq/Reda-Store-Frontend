@@ -9,21 +9,21 @@ const brandsData = [
     id: 1,
     name: "SAMSUNG",
     slug: "samsung",
-    logo: `${publicUrl}/img/samsung.jpg`,
+    logo: `./img/samsung.jpg`,
   },
-  { id: 2, name: "iPhone", slug: "apple", logo: `${publicUrl}/img/iphone.jpg` },
+  { id: 2, name: "iPhone", slug: "apple", logo: `./img/iphone.jpg` },
   {
     id: 3,
     name: "Xiaomi",
     slug: "xiaomi",
-    logo: `${publicUrl}/img/Xiaomi.jpg`,
+    logo: `./img/xiaomi.jpg`,
   },
 
   {
     id: 5,
     name: "Infinix",
     slug: "infinix",
-    logo: `${publicUrl}/img/infinx.jpg`,
+    logo: `./img/infinx.jpg`,
   },
   { id: 6, name: "HONOR", slug: "honor", logo: `${publicUrl}/img/honor.jpg` },
   { id: 7, name: "oppo", slug: "oppo", logo: `${publicUrl}/img/oppo.jpg` },
@@ -31,14 +31,14 @@ const brandsData = [
     id: 9,
     name: "realme",
     slug: "realme",
-    logo: `${publicUrl}/img/realmejpg.jpg`,
+    logo: `./img/realmejpg.jpg`,
   },
 
   {
     id: 12,
     name: "Iphone",
     slug: "iphone",
-    logo: `${publicUrl}/img/iphone.jpg`,
+    logo: `./img/iphone.jpg`,
   },
 ];
 
