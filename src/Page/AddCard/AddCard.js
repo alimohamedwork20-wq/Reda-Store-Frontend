@@ -90,14 +90,13 @@ export default function AddCard() {
     }, 3000);
   };
   const logos = {
-    visa: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg",
+    visa: "https://raw.githubusercontent.com/aaronfagan/svg-credit-card-payment-icons/main/flat/visa.svg",
     mastercard:
       "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg",
     meeza:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Meeza_logo.svg/512px-Meeza_logo.svg.png",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Meeza.svg/3840px-Meeza.svg.png?utm_source=ar.wikipedia.org&utm_campaign=index&utm_content=thumbnail",
     amex: "https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg",
   };
-
   return (
     <PageTransition>
       <div className="add-card-container">
