@@ -30,14 +30,14 @@ export default function Login() {
         ath_1854: userData.avatar || null,
         tfh_1854: userData.two_Factor,
       });
-      if (!userData.status) {
+      if (userData.status == true) {
         if (!userData.two_Factor) {
           showSuccess(`Welcome back, ${userData.name}!`);
           navigate("/", { replace: true });
         } else {
           navigate("/two-factor-auth", { replace: true });
         }
-      } else {
+      } else if (userData.status == false) {
         showError("الحساب معطل");
       }
     } catch (error) {

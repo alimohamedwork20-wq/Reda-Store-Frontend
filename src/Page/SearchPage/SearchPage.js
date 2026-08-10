@@ -10,7 +10,7 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
   const isInCart = (id) => cartItems.some((cart) => cart.id === id);
-  const userId = getSecureCookie("ith_1854");
+  const userId = Number(getSecureCookie("ith_1854"));
   const token = getSecureCookie("tth_1854");
 
   // 1️⃣ إعطاء مصفوفة فارغة كقيمة أوليّة لتجنب undefined

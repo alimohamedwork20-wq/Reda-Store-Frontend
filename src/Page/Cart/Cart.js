@@ -10,7 +10,7 @@ import { showError } from "../../Components/Helper/toastCustom";
 
 export default function Cart() {
   const token = getSecureCookie("tth_1854");
-  const userId = getSecureCookie("ith_1854");
+  const userId = Number(getSecureCookie("ith_1854"));
   const [loading, setLoading] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [handelCart, setHandelCart] = useState(0);

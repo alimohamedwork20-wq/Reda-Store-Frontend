@@ -15,7 +15,7 @@ export default function SlideProducts({ title, dis, style, api, path }) {
   const [category, setCategory] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [favoriteItems, setFavoriteItems] = useState([]);
-  const userId = getSecureCookie("ith_1854");
+  const userId = Number(getSecureCookie("ith_1854"));
   const token = getSecureCookie("tth_1854");
   //-------------------- Get Product --------------------//
   useEffect(() => {
@@ -33,14 +33,17 @@ export default function SlideProducts({ title, dis, style, api, path }) {
   //-------------------- Get Product From Favorites --------------------//
   useEffect(() => {
     if (userId && token) {
-      accountService
-        .GetProductsFromFavorite(userId)
-        .then((data) => setFavoriteItems(data.data))
-        .catch(() => {
+      const GetProductsFromFavorite = async () => {
+        try {
+          const res = await accountService.GetProductsFromFavorite(userId);
+          if (res.data.length != 0) setFavoriteItems(res.data);
+        } catch (err) {
           showError(
             "An error occurred while retrieving products from Favorites",
           );
-        });
+        }
+      };
+      GetProductsFromFavorite();
     }
   }, []);
   //-------------------- Get Product From Cart --------------------//
@@ -179,9 +182,15 @@ export default function SlideProducts({ title, dis, style, api, path }) {
           className="mySwiper"
         >
           {category.length === 0
-            ? Array.from({ length: 6 }).map((_, index) => (
+            ? Array.from({ length: 5 }).map((_, index) => (
                 <SwiperSlide key={index}>
-                  <Loading />
+                  {/* Skeleton Card للمنتج أثناء التحميل */}
+                  <div className="products skeleton-card">
+                    <div className="skeleton-img"></div>
+                    <div className="skeleton-title"></div>
+                    <div className="skeleton-stars"></div>
+                    <div className="skeleton-price"></div>
+                  </div>
                 </SwiperSlide>
               ))
             : category.map((item) => (

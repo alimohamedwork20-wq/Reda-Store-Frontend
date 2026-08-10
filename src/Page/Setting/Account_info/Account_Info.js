@@ -26,7 +26,7 @@ export default function Account_info() {
   const [phoneCountdown, setPhoneCountdown] = useState(0);
   const [isPhoneSending, setIsPhoneSending] = useState(false);
   const emailUser = getSecureCookie("eth_1854");
-  const userId = getSecureCookie("ith_1854");
+  const userId = Number(getSecureCookie("ith_1854"));
   const phoneUser = getSecureCookie("pth_1854");
   //============== Countdown ==============//
   React.useEffect(() => {

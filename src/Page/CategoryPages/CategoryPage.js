@@ -12,60 +12,64 @@ function ProductCard({ item }) {
 
   // دالة بسيطة لتقدير ما إذا كان النص طويلاً بما يكفي ليستحق ظهور زر Show More
   const isLongDescription = item.description && item.description.length > 80;
+
   //-------------------- handle Total Rating --------------------//
   const renderStars = (rating) => {
     const numRating = parseFloat(rating) || 0;
 
-    // 2. حساب عدد النجوم
-    const fullStars = Math.floor(numRating); // عدد النجوم الكاملة (مثال: 3.5 → 3)
-    const hasHalfStar = numRating % 1 >= 0.5; // هل يوجد نصف نجمة؟ (0.5 فأكثر)
-    const emptyStars = 5 - Math.ceil(numRating); // عدد النجوم الفارغة (مثال: 3.5 → 5 - 4 = 1)
+    const fullStars = Math.floor(numRating);
+    const hasHalfStar = numRating % 1 >= 0.5;
+    const emptyStars = 5 - Math.ceil(numRating);
 
     const stars = [];
 
-    // 3. إضافة النجوم الكاملة
     for (let i = 0; i < fullStars; i++) {
       stars.push(<i key={`full-${i}`} className="fa-solid fa-star"></i>);
     }
 
-    // 4. إضافة نصف نجمة (إذا وجدت)
     if (hasHalfStar) {
       stars.push(<i key="half" className="fa-solid fa-star-half-alt"></i>);
     }
 
-    // 5. إضافة النجوم الفارغة
     for (let i = 0; i < emptyStars; i++) {
       stars.push(<i key={`empty-${i}`} className="fa-regular fa-star"></i>);
     }
 
     return stars;
   };
+
   return (
     <div className="product-card">
-      <Link to={`/product/${item.id}`} className="product-card-link">
-        <img src={item.thumbnail} className="product-image" alt={item.title} />
-        <h3 style={{ marginTop: "15px", fontSize: "22px" }}>{item.title}</h3>
-      </Link>
+      <div>
+        <Link to={`/product/${item.id}`} className="product-card-link">
+          <img
+            src={item.thumbnail}
+            className="product-image"
+            alt={item.title}
+          />
+          <h3>{item.title}</h3>
+        </Link>
 
-      {/* الوصف مع التحكم في ظهوره بالكامل أو سطرين */}
-      <p className={`product-desc ${isExpanded ? "expanded" : ""}`}>
-        {item.description}
-      </p>
+        {/* الوصف مع التحكم في ظهوره بالكامل أو سطرين */}
+        <p className={`product-desc ${isExpanded ? "expanded" : ""}`}>
+          {item.description}
+        </p>
 
-      {/* زر Show More الخاص بوصف المنتج */}
-      {isLongDescription && (
-        <button
-          className="show-more-btn"
-          onClick={(e) => {
-            e.preventDefault(); // لمنع الانتقال لصفحة تفاصيل المنتج عند الضغط على الزر
-            setIsExpanded(!isExpanded);
-          }}
-        >
-          {isExpanded ? "Show Less" : "Show More"}
-        </button>
-      )}
+        {/* زر Show More الخاص بوصف المنتج */}
+        {isLongDescription && (
+          <button
+            className="show-more-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsExpanded(!isExpanded);
+            }}
+          >
+            {isExpanded ? "Show Less" : "Show More"}
+          </button>
+        )}
+      </div>
 
-      {/* قسم السعر */}
+      {/* قسم السعر في أسفل الكارت */}
       <div className="product-price-section">
         <Link
           style={{ display: "flex", flexDirection: "column" }}
@@ -75,7 +79,7 @@ function ProductCard({ item }) {
           <span className="rating">{renderStars(item.rating)}</span>
           <span
             className="price"
-            style={{ fontWeight: "bold", color: "#0284c7", marginTop: "10px" }}
+            style={{ fontWeight: "bold", color: "#0284c7", marginTop: "6px" }}
           >
             ${item.price}
           </span>
@@ -99,7 +103,6 @@ export default function CategoryPage() {
   useEffect(() => {
     setLoading(true);
     setProducts([]);
-    // إعادة تعيين العدد الافتراضي ليكون 8 عند تغيير القسم
     setVisibleCount(8);
 
     async function GetCategorys() {
@@ -109,7 +112,7 @@ export default function CategoryPage() {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false);
+        setLoading(false); // ✅ تصحيح: إيقاف التحميل بعد استلام البيانات
       }
     }
 
@@ -153,17 +156,17 @@ export default function CategoryPage() {
           {/* شبكة المنتجات */}
           <div className="products-grid-container">
             {loading ? (
-              <div
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  padding: "50px 0",
-                }}
-              >
-                <Loading />
-              </div>
+              /* عرض 8 كروت Skeleton مصممة خصيصاً للتناسق مع الـ Grid */
+              Array.from({ length: 8 }).map((_, index) => (
+                <div key={index} className="product-card skeleton-card">
+                  <div className="skeleton-img"></div>
+                  <div className="skeleton-title"></div>
+                  <div className="skeleton-text"></div>
+                  <div className="skeleton-text short"></div>
+                  <div className="skeleton-price"></div>
+                </div>
+              ))
             ) : products.length > 0 ? (
-              /* 3️⃣ اقتطاع المصفوفة لعرض أول visibleCount منتج فقط */
               products
                 .slice(0, visibleCount)
                 .map((item) => <ProductCard key={item.id} item={item} />)

@@ -11,7 +11,7 @@ const topCategories = [
     title: "Laptops",
     description: "High performance laptops for work & gaming",
     itemCount: "120+ Products",
-    image: `https://eshop.orange.eg/api/CatalogAPI/images/thumbs/0004195_gaming-laptops.jpeg`, // استبدل باسم الصورة عندك
+    image: `./img/TopCategoriesLaptops.jpeg`, // استبدل باسم الصورة عندك
     link: "/category/laptops",
   },
   {
@@ -19,7 +19,7 @@ const topCategories = [
     title: "Mobile Accessories",
     description: "Cases, chargers, screen protectors & more",
     itemCount: "350+ Products",
-    image: `https://www.shutterstock.com/image-photo/mobile-accessories-includes-power-bank-260nw-1791010007.jpg`,
+    image: `./img/TopCategoriesMobileAccessories.webp`,
     link: "/category/mobile-accessories",
   },
   {
@@ -27,7 +27,7 @@ const topCategories = [
     title: "Kitchen Accessories",
     description: "Modern smart tools & essential gadgets",
     itemCount: "90+ Products",
-    image: `https://i.ebayimg.com/images/g/sSAAAOSwG-diPZPf/s-l1200.jpg`,
+    image: `./img/TopCategoriesKitchenAccessories.jpg`,
     link: "/category/kitchen-accessories",
   },
   {
@@ -35,7 +35,7 @@ const topCategories = [
     title: "Mens Watches",
     description: "Elevate your living space with luxury items",
     itemCount: "200+ Products",
-    image: `https://www.shutterstock.com/image-photo/luxury-watches-isolated-on-white-260nw-1735132982.jpg`,
+    image: `./img/TopCategoriesMensWatches.webp`,
     link: "/category/mens-watches",
   },
 ];

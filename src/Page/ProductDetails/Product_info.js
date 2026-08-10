@@ -7,7 +7,7 @@ import { getSecureCookie } from "../../Components/Helper/cookieUtils";
 export default function Product_info({ product }) {
   const [cartItems, setCartItems] = useState([]);
   const [favoriteItems, setFavoriteItems] = useState([]);
-  const userId = getSecureCookie("ith_1854");
+  const userId = Number(getSecureCookie("ith_1854"));
   const token = getSecureCookie("tth_1854");
 
   //---------------------- Get Product From Cart && Favorite ----------------------//

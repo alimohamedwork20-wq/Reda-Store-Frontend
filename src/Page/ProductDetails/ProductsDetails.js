@@ -17,8 +17,31 @@ export default function ProductsDetails() {
   }, [id]);
   if (!product) {
     return (
-      <div style={{ marginTop: "20%" }}>
-        <Loading></Loading>
+      <div className="item-details">
+        <div className="container">
+          {/* Left Side: Images Skeleton */}
+          <div className="imgs-item">
+            <div className="skeleton-box skeleton-big-img"></div>
+            <div className="sm-img">
+              <div className="skeleton-box skeleton-sm-img"></div>
+              <div className="skeleton-box skeleton-sm-img"></div>
+              <div className="skeleton-box skeleton-sm-img"></div>
+              <div className="skeleton-box skeleton-sm-img"></div>
+            </div>
+          </div>
+
+          {/* Right Side: Product Info Skeleton */}
+          <div className="item-name">
+            <div className="skeleton-box skeleton-title"></div>
+            <div className="skeleton-box skeleton-price"></div>
+            <div className="name-details">
+              <div className="skeleton-box skeleton-line full"></div>
+              <div className="skeleton-box skeleton-line medium"></div>
+              <div className="skeleton-box skeleton-line short"></div>
+              <div className="skeleton-box skeleton-btn"></div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

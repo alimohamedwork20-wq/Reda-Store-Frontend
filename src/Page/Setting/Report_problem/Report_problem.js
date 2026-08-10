@@ -41,7 +41,7 @@ export default function Report_problem() {
         problemData.subject,
         problemData.description,
         screenshot,
-        getSecureCookie("ith_1854"),
+        Number(getSecureCookie("ith_1854")),
       )
       .then(() => {
         showSuccess("Your report has been submitted. We will review it soon!");

@@ -13,7 +13,7 @@ export default function TopHeaders() {
   const [favoriteItems, setFavoriteItems] = useState([]);
   const [handelCart, setHandelCart] = useState(0);
   const token = getSecureCookie("tth_1854");
-  const userId = getSecureCookie("ith_1854");
+  const userId = Number(getSecureCookie("ith_1854"));
 
   const number = cartItems.length;
   const numberF = favoriteItems.length;
