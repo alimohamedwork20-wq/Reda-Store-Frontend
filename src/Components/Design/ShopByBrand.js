@@ -15,7 +15,7 @@ const brandsData = [
   {
     id: 3,
     name: "Xiaomi",
-    slug: "xiaomi",
+    slug: "Xiaomi",
     logo: `./img/xiaomi.jpg`,
   },
 

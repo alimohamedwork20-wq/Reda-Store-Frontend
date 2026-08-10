@@ -134,10 +134,3 @@ link {
 .search-suggestions p {
   transform: translateY(30%);
 }
-[dir="rtl"] {
-  text-align: right;
-}
-
-[dir="ltr"] {
-  text-align: left;
-}
