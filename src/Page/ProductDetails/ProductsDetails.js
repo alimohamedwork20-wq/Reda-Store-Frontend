@@ -49,11 +49,14 @@ export default function ProductsDetails() {
     <PageTransition key={id}>
       {" "}
       <div className="item-details">
-        <div className="container">
+        <div className="container container-product-details">
           {/* Product Img */}
           <Product_img product={product}></Product_img>
           {/* Product Info */}
-          <Product_info product={product}></Product_info>
+          <Product_info
+            className={"Product_info"}
+            product={product}
+          ></Product_info>
         </div>
 
         {/* Slide Products */}

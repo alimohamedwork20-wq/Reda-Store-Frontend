@@ -6,234 +6,608 @@
   --color-heading: #253237;
   --border-color: #d6d6d6d5;
 }
+
+/* Base Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  padding-top: 80px;
+}
+
+/* ==========================================
+   🔝 TOP HEADER STYLES
+   ========================================== */
+
 .top-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 50000;
+  background-color: var(--white-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
-body {
-  padding-top: 80px;
-}
+
 .top-header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 0;
+  padding: 10px 15px;
+  gap: 20px;
 }
 
 .top-header .logo {
-  width: 160px;
+  width: 140px;
+  flex-shrink: 0;
 }
+
+.top-header .logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 🎯 مربع البحث - طويل وعريض واستجابي */
 .search-box {
-  width: 500px;
-  align-items: center;
+  position: relative; /* لضبط القائمة المنسدلة تحته تماماً */
+  flex: 1; /* أخذ أكبر قدر ممكن من المساحة المتاحة */
+  width: 100%;
+  max-width: 750px; /* العرض الجديد الطويل */
   display: flex;
+  align-items: center;
   background-color: var(--bg-color);
   border-radius: 30px;
   border: 1px solid var(--main-color);
+  margin: 0 auto;
 }
+
 .search-box input {
-  width: 440px;
-  height: 45px;
-  padding: 5px 15px 5px 20px;
-  background-color: var(--bg-color);
-  border-radius: 30px 0 0 30px;
+  flex: 1;
+  width: 100%;
+  height: 44px;
+  padding: 5px 20px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 15px;
 }
+
 .search-box button {
-  height: 45px;
-  width: 60px;
+  height: 44px;
+  width: 65px;
   background-color: var(--main-color);
+  border: none;
   border-radius: 0 30px 30px 0;
   color: white;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
+  flex-shrink: 0;
 }
+
+/* 🎯 مطابقة عرض قائمة نتائح البحث المنسدلة بعرض مربع البحث */
+.search-box .search-results,
+.search-box .suggestions-list,
+.search-box > div:last-child {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%; /* القائمة تأخذ نفس طول مربع البحث الجديد */
+  background: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  z-index: 60000;
+  overflow: hidden;
+}
+
+/* أيقونات السلة والمفضلة العلوي */
 .header-icons {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
+  flex-shrink: 0;
 }
+
 .header-icons .icon {
   position: relative;
   cursor: pointer;
 }
+
 .header-icons .icon i {
-  font-size: 25px;
+  font-size: 22px;
 }
+
 .header-icons .icon .count {
   position: absolute;
-  top: -5px;
-  right: -10px;
-  width: 20px;
-  height: 20px;
+  top: -6px;
+  right: -8px;
+  width: 18px;
+  height: 18px;
   text-align: center;
-  line-height: 20px;
-  border-radius: 100%;
-  font-size: 11px;
+  line-height: 18px;
+  border-radius: 50%;
+  font-size: 10px;
   background-color: var(--main-color);
   color: var(--white-color);
 }
-/* --------buttom-header ----------*/
+
+/* ==========================================
+   🔻 BOTTOM HEADER STYLES (مضبوطة التوسيط)
+   ========================================== */
 
 .buttom-header {
   background-color: var(--main-color);
+  position: relative;
+  z-index: 40000;
 }
+
 .buttom-header nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 50px;
-  height: 80px;
-}
-.category-nav {
-  width: 220px;
-  height: 100%;
-  margin-top: 2%;
+  height: 60px;
   position: relative;
 }
-.category-select {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  transform: translateY(2%);
-  background-color: var(--white-color);
-  border: 1px solid #bbbbbb;
-  border-top: 0;
+
+/* 1️⃣ قائمة الأقسام (Category Dropdown) */
+.category-nav {
+  min-width: 200px;
+  position: relative;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  max-height: 400px;
-  overflow-y: auto;
-  border-radius: 0 0 0px 10px;
-  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-  transition: 0.2s;
-  z-index: 50;
+  align-items: center;
 }
-.category-select.actives {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}
-.category-select a {
-  color: black;
-  text-decoration: none;
-  padding: 15px;
-  border-bottom: 1px solid #c0c0c0;
-  transition: 0.2s;
-}
-.category-select a:last-child {
-  border-bottom: 0;
-}
-.category-select a:hover {
-  background-color: var(--main-color);
-  color: white;
-}
+
 .category-btn {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
   color: white;
   gap: 10px;
-  transform: translateY(80%);
-  align-items: center;
-  background-color: var(--main-color);
+  background-color: #0080d6;
+  padding: 10px 15px;
+  border-radius: 6px;
   width: 200px;
+  user-select: none;
+  transition: background 0.2s ease;
+}
+.category-btn:hover {
+  background-color: #0073c2;
 }
 
 .category-btn p {
   color: white;
   margin: 0;
+  font-weight: 500;
+  font-size: 15px;
+  white-space: nowrap;
 }
+
+/* القائمة المنسدلة */
+.category-select {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  width: 200px;
+  background-color: var(--white-color);
+  border: 1px solid #bbbbbb;
+  border-top: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 380px;
+  overflow-y: auto;
+  border-radius: 0 0 8px 8px;
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transition:
+    clip-path 0.3s ease-in-out,
+    opacity 0.2s ease;
+  opacity: 0;
+  z-index: 50000;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.category-select.actives {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  opacity: 1;
+}
+
+.category-select a {
+  color: var(--color-heading);
+  text-decoration: none;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 14px;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  display: block;
+}
+
+.category-select a:last-child {
+  border-bottom: 0;
+}
+
+.category-select a:hover {
+  background-color: var(--main-color);
+  color: white;
+}
+
+/* 2️⃣ روابط الصفحات الرئيسية */
 .category-list {
   display: flex;
-  gap: 40px;
-  z-index: 1000;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
 }
 
 .category-list li {
   list-style: none;
-  height: 100%;
   cursor: pointer;
-  z-index: 1000;
-  padding: 26px 10px;
+  border-radius: 4px;
+  transition: background 0.2s;
 }
-.category-list li a {
+
+.category-list li a,
+.category-list a {
   text-decoration: none;
-  font-size: 18px;
-  height: 100%;
+  font-size: 16px;
   color: white;
-  padding: 10px;
+  padding: 8px 16px;
+  display: block;
+  font-weight: 500;
 }
-.category-list li:hover {
-  background-color: #0089e5;
-}
-.sign-icons {
-  text-align: end;
-  width: 100%;
-}
-.sign-icons i {
-  font-size: 18px;
-  margin: 5px;
-  cursor: pointer;
-  color: white;
-}
-.sign-icons i:hover {
-  color: #c7c7c7;
-}
-.active {
+
+.category-list li:hover,
+.category-list li.active {
   background-color: #0080d6;
 }
-/* =========================
-   RESPONSIVE FIX ONLY
-   ========================= */
 
-/* =========================
-   MOBILE FIX
-   ========================= */
-/* =========================
-   BOTTOM HEADER RESPONSIVE ONLY
-   ========================= */
-/* زرار الموبايل */
-/* الديسكتوب = ظاهر طبيعي */
-.show-desktop {
-  display: block;
+/* 3️⃣ أيقونات التسجيل (Sign Icons) */
+.sign-icons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+  min-width: 200px;
 }
 
-/* Bootstrap collapse يفضل زي ما هو */
-.navbar-collapse {
-  transition: 0.3s;
+.sign-icons a {
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+  transition: opacity 0.2s;
 }
+
+.sign-icons a:hover {
+  opacity: 0.8;
+}
+
 .menu-toggle {
   display: none;
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
+  color: white;
+  padding: 5px;
 }
 
-/* موبايل */
+/* إصلاح التولتيب Tippy.js */
+div[data-tippy-root] {
+  z-index: 9999999 !important;
+}
+
+/* الحاوية الرئيسية للسيرش والقائمة */
+.search-wrapper {
+  position: relative; /* مهم جداً لتكون القائمة منسوبة لها */
+  flex: 1;
+  max-width: 650px; /* مساوية لعرض السيرش الطويل */
+  width: 100%;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-color, #f3f3f3);
+  border-radius: 30px;
+  border: 1px solid var(--main-color, #0090f0);
+  width: 100%;
+  overflow: hidden;
+}
+.search-box-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-right: 2%;
+}
+.search-box input {
+  flex: 1;
+  height: 44px;
+  padding: 5px 20px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 15px;
+}
+
+.search-box button {
+  height: 44px;
+  width: 65px;
+  background-color: var(--main-color, #0090f0);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+.header-icons-and-search {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* 🎯 القائمة المنبثقة للاقتراحات - تطابق عرض السيرش تماماً */
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%; /* تأخذ 100% من عرض السيرش الطويل بالضبط */
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  z-index: 99999;
+  list-style: none;
+  padding: 6px 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* شكل العناصر داخل الاقتراحات */
+.suggestion-item {
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover {
+  background-color: #f8fafc;
+}
+
+.suggestion-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  width: 100%;
+  text-decoration: none;
+  gap: 12px;
+}
+
+.suggestion-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.suggestion-title {
+  color: #1e293b;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* إضافة نقاط عند زيادة طول النص */
+}
+
+.empty-suggestions {
+  padding: 14px 16px;
+  color: #64748b;
+  font-size: 14px;
+  text-align: center;
+}
+/* ==========================================
+   📱 RESPONSIVE BREAKPOINTS
+   ========================================== */
+
 @media (max-width: 1090px) {
   .menu-toggle {
     display: block;
-    color: white;
+  }
+
+  .category-nav,
+  .sign-icons {
+    min-width: auto;
   }
 
   .category-list {
     position: absolute;
-    top: 70px;
+    top: 100%;
     left: 0;
-    transform: translateY(19%);
     width: 100%;
-    background: #0984dc;
-    padding: 10px;
-    display: flex;
+    background: #007bc2;
     flex-direction: column;
-    display: none;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    margin: 0;
     max-height: 0;
     overflow: hidden;
-    transition: 0.3s;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
   }
 
   .category-list.open {
-    max-height: 460px;
-    display: block; /* يتحكم في الطول */
+    max-height: 450px;
+    opacity: 1;
+    visibility: visible;
+    padding: 10px 0;
+  }
+
+  .category-list li {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .category-list li a,
+  .category-list a {
+    padding: 12px 20px;
+    width: 100%;
+  }
+
+  .category-list li:hover,
+  .category-list li.active {
+    background-color: #00609c;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 115px;
+  }
+
+  .top-header .container {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
+  .top-header .logo {
+    width: 110px;
+    margin: auto;
+  }
+
+  .search-box {
+    order: 3;
+    max-width: 100%;
+    margin-top: 2px;
+  }
+
+  .search-box input {
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .search-box button {
+    height: 38px;
+    width: 48px;
+  }
+
+  .header-icons {
+    gap: 15px;
+  }
+
+  .header-icons .icon i {
+    font-size: 20px;
+  }
+
+  .category-btn {
+    width: 160px;
+  }
+
+  .category-btn p {
+    font-size: 13px;
+  }
+
+  .category-select {
+    width: 160px;
+  }
+}
+
+@media (max-width: 500px) {
+  body {
+    padding-top: 135px !important;
+  }
+
+  .top-header .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .top-header .logo {
+    width: 110px;
+  }
+
+  .header-icons {
+    order: 2;
+    gap: 12px;
+  }
+
+  .header-icons .icon i {
+    font-size: 19px;
+  }
+
+  .search-box {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 4px;
+    transform: none;
+  }
+
+  .search-box input {
+    height: 36px;
+    font-size: 13px;
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .search-box button {
+    height: 36px;
+    width: 45px;
+  }
+
+  .buttom-header nav {
+    height: 50px;
+    padding: 0 8px;
+  }
+
+  .category-btn {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .category-btn p {
+    font-size: 12px;
+  }
+
+  .sign-icons {
+    gap: 10px;
+  }
+
+  .sign-icons a {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-btn p {
+    display: none;
+  }
+
+  .category-btn {
+    width: auto;
+    padding: 8px 12px;
+  }
+
+  .category-select {
+    width: 180px;
+  }
+}
+
+@media (max-width: 400px) {
+  .top-header .logo {
+    width: 95px;
   }
 }

@@ -1,63 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  --auth-primary: #0073ff;
+  --auth-primary-hover: #005bb5;
+  --auth-bg-gradient: linear-gradient(135deg, #f0f4fd 0%, #e2eafc 100%);
+  --auth-text-dark: #0f172a;
+  --auth-text-muted: #64748b;
+  --auth-border: #e2e8f0;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
+/* 🌌 الحاوية الرئيسية للتوسط وتوزيع الشاشة */
 .login {
   width: 100%;
-  height: 70vh;
+  min-height: calc(100vh - 130px);
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f4f4f4;
+  background: var(--auth-bg-gradient);
+  padding: 40px 20px;
+  position: relative;
 }
 
+/* ✨ كارت المصادقة العصري - Glassmorphism UI */
 .login-form {
-  background: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  width: 500px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  border: 1px solid #1292fc5b;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 40px 36px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow:
+    0 20px 40px -15px rgba(0, 115, 255, 0.12),
+    0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.login-form:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 115, 255, 0.18);
+}
+
+/* 🏷️ العناوين */
 .login-form h2 {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--auth-text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
+.login-form h2 i {
+  color: var(--auth-primary);
+  background: #eef5ff;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 20px;
+}
+
+/* 📝 المدخلات والعناصر داخل الفورم */
 .login-form form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+}
+
+.login-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--auth-text-dark);
+  margin-bottom: 8px;
+  display: block;
 }
 
 .login-form input {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--auth-border);
+  border-radius: 12px;
   outline: none;
-  transition: 0.3s;
-  margin-bottom: 10px;
+  transition: all 0.25s ease;
+  margin-bottom: 18px;
+  font-size: 15px;
+  background: #f8fafc;
+  color: var(--auth-text-dark);
+}
+
+.login-form input::placeholder {
+  color: #94a3b8;
 }
 
 .login-form input:focus {
-  border-color: #007bff;
+  background: #ffffff;
+  border-color: var(--auth-primary);
+  box-shadow: 0 0 0 4px rgba(0, 115, 255, 0.12);
 }
 
+/* 🚀 أزرار التشغيل */
 .login-form button {
-  padding: 12px;
-  background: #007bff;
+  width: 100%;
+  padding: 14px;
+  background: var(--auth-primary);
   color: white;
   border: none;
-  transition: 0.3s;
-  border-radius: 10px;
+  transition: all 0.25s ease;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
-  margin-top: 10px;
+  font-weight: 600;
+  margin-top: 6px;
+  box-shadow: 0 8px 16px -4px rgba(0, 115, 255, 0.35);
 }
 
 .login-form button:hover {
-  background: #0056b3;
+  background: var(--auth-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px -4px rgba(0, 115, 255, 0.45);
+}
+
+.login-form button:active {
+  transform: translateY(0);
+}
+
+.login-form button:disabled {
+  background: #cbd5e1;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 🔗 الروابط والنصوص الإضافية */
+.login-form a {
+  color: var(--auth-primary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  align-self: flex-end;
+  transition: color 0.2s ease;
+}
+
+.login-form a:hover {
+  color: var(--auth-primary-hover);
+  text-decoration: underline;
+}
+
+/* 📱 Responsive Adjustments */
+@media (max-width: 576px) {
+  .login {
+    padding: 20px 16px;
+  }
+
+  .login-form {
+    padding: 28px 22px;
+    border-radius: 16px;
+  }
+
+  .login-form h2 {
+    font-size: 22px;
+    margin-bottom: 22px;
+  }
+
+  .login-form input {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .login-form button {
+    padding: 12px;
+    font-size: 15px;
+  }
 }

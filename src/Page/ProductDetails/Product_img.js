@@ -4,11 +4,11 @@ export default function Product_img({ product }) {
   const [active, setActive] = useState("");
   const mainImage = active || product?.thumbnail || "";
   return (
-    <div className="imgs-item">
+    <div className="imgs-item Product_img">
       <div className="big-img">
         <img src={mainImage} alt=""></img>
       </div>
-      <div className="sm-img">
+      <div className="sm-img ">
         {product?.images?.map((item, index) => (
           <img
             className={`${active === item.imageUrl ? "activ" : ""}`}

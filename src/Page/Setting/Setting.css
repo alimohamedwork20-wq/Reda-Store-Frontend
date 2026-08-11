@@ -1,21 +1,38 @@
+/* Box-Sizing عام لجميع العناصر */
+.container-setting,
+.container-setting * {
+  box-sizing: border-box;
+}
+
 .container-setting {
   width: 100%;
-  min-height: calc(100vh - 120px);
+  min-height: calc(90vh - 120px);
+  padding: 20px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* ==========================================
+   💻 الشاشات الكبيرة (Desktop)
+   ========================================== */
 .container-setting .content {
   display: flex;
-  width: 70%;
-  margin: auto;
-  margin-top: 5%; /* قللت الـ 10% شوية عشان الديزاين يكون مرتاح فوق */
-  height: 600px; /* 👈 ثبتنا طول الصندوق الأب الكلي */
-  border-radius: 12px; /* لقطة شياكة للحواف الخارجية */
-  overflow: hidden; /* عشان الحواف المقصوصة تبان نظيفة مع الخلفيات */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* ظل خفيف يدي عمق للديزاين */
+  flex-direction: row;
+  width: 90%;
+  max-width: 1100px;
+  height: 600px; /* 🔒 طول ثابت للديسك توب */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
 }
 
+/* القائمة الجانبية في الديسك توب */
 .container-settingLeft {
-  width: 25%;
+  width: 280px;
+  height: 100%;
+  flex-shrink: 0;
   background-color: rgb(32, 147, 255);
 }
 
@@ -23,34 +40,95 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  height: 100%;
   width: 100%;
+  height: 100%;
 }
 
 .container-settingLeft ul li {
-  text-wrap: nowrap;
-  background-color: white;
   width: 100%;
-  padding: 30px 30px 30px 10px;
+  padding: 18px 20px;
   background-color: rgb(32, 147, 255);
   color: white;
   cursor: pointer;
-}
-
-.container-settingLeft ul li:last-child {
-  padding: 30px 30px 27px 10px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .container-settingLeft ul li:hover {
   background-color: rgb(14, 137, 252);
 }
 
-/* ➡️ التعديل السحري للناحية اليمين بس هنا 👇 */
+/* المحتوى الأيمن في الديسك توب */
 .container-settingRight {
-  width: 75%;
+  flex: 1;
+  height: 100%;
   background-color: aliceblue;
-  height: 100%; /* تاخد كامل طول الأب الثابت */
-  overflow-y: auto; /* 👈 السكرول يظهر هنا "فقط" تلقائياً لما البيانات تكتر عن الـ 600px */
-  padding: 30px; /* مسافة داخلية مريحة عشان الفورم متلزقش في الحواف */
-  box-sizing: border-box; /* عشان الـ padding ميزودش عرض الـ 75% */
+  overflow-y: auto; /* السكرول جواه فقط */
+  padding: 30px;
+}
+
+/* ==========================================
+   📱 الموبايل والتليفون (Mobile & Tablet)
+   ========================================== */
+@media (max-width: 768px) {
+  .container-setting {
+    padding: 10px 5px;
+  }
+
+  /* تثبيت الكرت الكلي على الموبايل */
+  .container-setting .content {
+    flex-direction: column;
+    width: 100%;
+    height: 82vh;
+    max-height: 700px;
+    min-height: 500px;
+    margin: 0;
+    border-radius: 10px;
+  }
+
+  /* شريط المنيو الأفقي فوق */
+  .container-settingLeft {
+    width: 100%;
+    height: 50px; /* ارتفاع مناسب للشريط */
+    flex-shrink: 0; /* يمنع انكماش الشريط */
+    background-color: rgb(32, 147, 255);
+    overflow-x: auto; /* يسمح بالسكرول العرضي */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* إصلاح العرض الحقيقي للـ UL */
+  .container-settingLeft ul {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: max-content; /* 👈 السحر هنا: يخلي الـ UL بياخد عرض محتواه الإجمالي مش 100% */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* إصلاح حجم العناصر Li */
+  .container-settingLeft ul li {
+    width: auto !important; /* 👈 يمنع العنصر إنه ياخد 100% من العرض */
+    flex-shrink: 0; /* يمنع انكماش الكلمات */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 16px; /* مسافة متناسقة لكل كلمة */
+    font-size: 13px;
+    white-space: nowrap; /* يمنع نزول الكلام للسطر الثاني */
+    border-bottom: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* الجزء الداخلي للمحتوى وتحته سكرول رأسي */
+  .container-settingRight {
+    width: 100%;
+    height: calc(100% - 50px);
+    padding: 15px;
+    overflow-y: auto;
+  }
 }

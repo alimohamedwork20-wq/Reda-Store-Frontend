@@ -9,13 +9,11 @@ export default function CheckCode({ props }) {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  // إضافة حالة العد التنازلي وإرسال OTP
   const [countdown, setCountdown] = useState(0);
   const [isOtpSending, setIsOtpSending] = useState(false);
 
   const navigate = useNavigate();
 
-  // ============== العد التنازلي ==============
   useEffect(() => {
     let timer;
     if (countdown > 0) {
@@ -24,9 +22,7 @@ export default function CheckCode({ props }) {
     return () => clearTimeout(timer);
   }, [countdown]);
 
-  // ============== إرسال OTP إلى البريد الإلكتروني ==============
   async function SendOtpToEmail() {
-    // منع الإرسال إذا كان العد التنازلي يعمل أو كان هناك طلب قيد التنفيذ
     if (countdown > 0 || isOtpSending) return;
 
     const email = localStorage.getItem("email");
@@ -39,7 +35,7 @@ export default function CheckCode({ props }) {
     try {
       await accountService.sendOtp(email);
       showSuccess("OTP sent successfully!");
-      setCountdown(60); // بدء العد التنازلي لمدة 60 ثانية
+      setCountdown(60);
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Failed to send OTP. Try again.";
@@ -49,7 +45,6 @@ export default function CheckCode({ props }) {
     }
   }
 
-  // ============== التحقق من الكود ==============
   async function handleSubmit(e) {
     e.preventDefault();
     try {
@@ -84,33 +79,34 @@ export default function CheckCode({ props }) {
             ></i>
           </h2>
 
-          <form style={{ gap: "0" }} onSubmit={handleSubmit}>
-            {/* حقل إدخال الكود مع زر إرسال OTP */}
+          <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: "15px" }}>
+              {/* 🎯 تم استخدام كلاس otp-header للتحكم في التجاوب */}
               <div
+                className="otp-header"
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
-                <label>Enter the code that was sent to your email</label>
+                <label style={{ margin: 0 }}>
+                  Enter the code sent to your email
+                </label>
                 <span
                   style={{
-                    color: countdown > 0 || isOtpSending ? "#888" : "#2f87eb",
+                    color: countdown > 0 || isOtpSending ? "#888" : "#007bff",
                     cursor:
                       countdown > 0 || isOtpSending ? "not-allowed" : "pointer",
-                    border:
-                      countdown > 0 || isOtpSending
-                        ? "1px solid #ccc"
-                        : "1px solid #2490e9c9",
-                    padding: "2px 10px",
-                    borderRadius: "5px",
+                    border: "1px solid #cbd5e1",
+                    padding: "4px 10px",
+                    borderRadius: "6px",
                     background:
-                      countdown > 0 || isOtpSending ? "#e0e0e0" : "#d1d1d1af",
-                    fontSize: "14px",
+                      countdown > 0 || isOtpSending ? "#f1f5f9" : "#e0f2fe",
+                    fontSize: "13px",
                     pointerEvents:
                       countdown > 0 || isOtpSending ? "none" : "auto",
+                    whiteSpace: "nowrap",
                   }}
                   onClick={SendOtpToEmail}
                 >
@@ -122,15 +118,11 @@ export default function CheckCode({ props }) {
                 </span>
               </div>
               <input
-                style={
-                  error
-                    ? {
-                        border: "1px solid red",
-                        width: "100%",
-                        marginTop: "25px",
-                      }
-                    : { width: "100%", marginTop: "25px" }
-                }
+                style={{
+                  width: "100%",
+                  marginTop: "12px",
+                  border: error ? "1px solid red" : undefined,
+                }}
                 type="text"
                 placeholder="Enter the code"
                 value={Code}

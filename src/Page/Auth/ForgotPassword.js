@@ -9,45 +9,47 @@ export default function ForgotPassword() {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await accountService.ForgotPassword(Email);
+      await accountService.ForgotPassword(Email);
       localStorage.setItem("email", Email);
       showSuccess("A verification code has been sent to your email");
       navigate("/check-code");
     } catch {
       showError("Something went wrong");
+      setError(true);
     } finally {
       setLoading(false);
     }
   }
+
   return (
     <PageTransition>
       <div className="login">
         <div className="login-form">
           <h2>
-            Forgot Password{" "}
-            <i
-              style={{ color: "#007bff" }}
-              className="fa-solid fa-arrow-right-to-bracket"
-            ></i>
+            Forgot Password <i className="fa-solid fa-key"></i>
           </h2>
 
           <form onSubmit={handleSubmit}>
-            <lable>Enter Your Email</lable>
+            <label>Enter Your Email</label>
             <input
-              style={error ? { border: "1px solid red" } : {}}
+              style={error ? { border: "1.5px solid #ef4444" } : {}}
               type="email"
-              placeholder="Email"
+              placeholder="e.g. name@example.com"
               value={Email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError(false);
+              }}
               required
             />
 
             <button type="submit" disabled={Loading}>
-              {Loading ? "Loading..." : "Confirm"}
+              {Loading ? "Sending Code..." : "Send Verification Code"}
             </button>
           </form>
         </div>

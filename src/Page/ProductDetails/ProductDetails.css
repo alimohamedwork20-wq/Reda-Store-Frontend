@@ -143,3 +143,16 @@
     background-position: -200% 0;
   }
 }
+@media (max-width: 700px) {
+  .container-product-details {
+    flex-direction: column;
+  }
+  .Product_info {
+    text-align: left;
+    min-width: 100%;
+    margin-top: 15%;
+  }
+  .Product_img {
+    min-width: 80%;
+  }
+}

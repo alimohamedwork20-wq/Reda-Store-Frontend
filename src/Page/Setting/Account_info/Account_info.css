@@ -1,20 +1,27 @@
+/* ضبط عام لمنع الـ Overflow بسبب الـ Padding */
+.account-info-container,
+.account-info-container * {
+  box-sizing: border-box;
+}
+
 .account-info-container {
-  padding: 10px;
+  padding: 15px;
   width: 100%;
+  max-width: 100%;
   color: #333;
 }
 
 .account-info-container h2 {
-  font-size: 24px;
+  font-size: 22px;
   margin-bottom: 5px;
   color: #1fa0eb;
-  padding: 10px 0 0px 0;
+  padding-top: 10px;
 }
 
 .account-info-container .subtitle {
   font-size: 14px;
   color: #666;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 /* قسم الصورة الشخصية */
@@ -22,16 +29,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   border-bottom: 1px solid #eee;
   padding-bottom: 20px;
 }
 
 .avatar-wrapper {
   position: relative;
-  width: 120px;
-  height: 120px;
-  margin-bottom: 10px;
+  width: 110px;
+  height: 110px;
+  margin-bottom: 12px;
 }
 
 .avatar-wrapper img {
@@ -39,13 +46,14 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #2093ff; /* واخد نفس لون الهيدر بتاعك */
+  border: 3px solid #2093ff;
 }
 
+/* زر الرفع */
 .upload-btn {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 0;
+  right: 0;
   background-color: #2093ff;
   color: white;
   width: 32px;
@@ -63,33 +71,60 @@
   background-color: #0e89fc;
 }
 
+/* زر الحذف - ضبط المكان بنسبة صحيحة داخل الـ Wrapper */
+.account-info-container .fa-trash-can {
+  position: absolute;
+  bottom: 0;
+  left: 0; /* تم التغيير لـ left لضمان الثبات بجانب زر الرفع */
+  background-color: #dc3545;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.account-info-container .fa-trash-can:hover {
+  background-color: #c82333;
+}
+
 .avatar-note {
   font-size: 12px;
   color: #888;
+  text-align: center;
 }
 
-/* تقسيم الحقول بنظام الـ Grid */
-.inputs-grid {
+/* تقسيم الحقول المتجاوب */
+.account-info-container .inputs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  margin-bottom: 30px;
+  /* تقليل الـ min-width لـ 100% في الشاشات الصغيرة و 240px في الشاشات الأكبر */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
-.input-group {
+.account-info-container .input-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  width: 100%;
 }
 
-.input-group label {
+.account-info-container .input-group label {
   font-size: 14px;
   font-weight: 600;
   color: #444;
 }
 
-.input-group input {
-  padding: 12px 15px;
+.account-info-container .input-group input {
+  width: 100%;
+  padding: 10px 14px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
@@ -97,51 +132,52 @@
   transition: 0.3s ease;
 }
 
-.input-group input:focus {
+.account-info-container .input-group input:focus {
   border-color: #2093ff;
   box-shadow: 0 0 5px rgba(32, 147, 255, 0.2);
 }
 
-/* زرار الحفظ */
-.form-actions {
+/* أزرار التحكم والعمليات */
+.account-info-container .form-actions {
   display: flex;
   justify-content: flex-end;
+  width: 100%;
 }
 
-.save-btn {
+.account-info-container .save-btn {
   background-color: #2093ff;
   color: white;
   border: none;
-  padding: 12px 30px;
+  padding: 11px 28px;
   font-size: 15px;
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
   transition: 0.3s ease;
+  width: auto;
 }
-
-.save-btn:hover {
+.logout:hover {
+  background-color: #c82333;
+}
+.account-info-container .save-btn:hover {
   background-color: #0e89fc;
 }
-.account-info-container .logout button:hover {
-  transform: scale(1, 1);
-}
-.change:hover {
-  background-color: red;
-}
-.account-info-container .fa-trash-can {
-  position: absolute;
-  bottom: 5px;
-  right: 85px;
-  background-color: red;
-  color: white;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  justify-content: center;
-  cursor: pointer;
-  transition: 0.3s ease;
+
+/* Media Queries للشاشات الصغيرة والموبايل */
+@media (max-width: 576px) {
+  .account-info-container {
+    padding: 10px;
+  }
+
+  .account-info-container h2 {
+    font-size: 20px;
+  }
+
+  .account-info-container .form-actions {
+    justify-content: stretch;
+  }
+
+  .account-info-container .save-btn {
+    width: 100%; /* زر الحفظ بياخد العرض كامل في الموبايل لسهولة الضغط */
+  }
 }

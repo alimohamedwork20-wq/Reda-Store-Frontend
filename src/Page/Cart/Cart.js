@@ -11,7 +11,7 @@ import { showError } from "../../Components/Helper/toastCustom";
 export default function Cart() {
   const token = getSecureCookie("tth_1854");
   const userId = Number(getSecureCookie("ith_1854"));
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
   const [handelCart, setHandelCart] = useState(0);
 
@@ -28,6 +28,8 @@ export default function Cart() {
         } finally {
           setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     };
     fetchCartItems();
@@ -46,21 +48,18 @@ export default function Cart() {
   };
 
   const handleDecrease = async (productId, currentQty) => {
-    // يمنع النقصان إذا كانت الكمية 1 أو أقل
     if (currentQty <= 1) return;
     const newQty = currentQty - 1;
     updateQuantity(productId, newQty);
   };
 
   const updateQuantity = async (productId, newQty) => {
-    // 1. تحديث الـ State محلياً لسرعة الاستجابة (Optimistic Update)
     setCartItems((prevItems) =>
       prevItems.map((item) =>
         item.id === productId ? { ...item, quantity: newQty } : item,
       ),
     );
 
-    // 2. إرسال التحديث للـ Backend إذا كان لديك API مخصص لتحديث الكمية
     if (token && userId) {
       try {
         if (accountService.UpdateCartQuantity) {
@@ -102,24 +101,80 @@ export default function Cart() {
     }
   };
 
-  //------------------- Loading -------------------//
+  //------------------- Skeleton Component -------------------//
+  const CartSkeleton = () => (
+    <div className="checkout">
+      <div className="ordersummary">
+        <div
+          className="skeleton-box"
+          style={{ width: "180px", height: "30px", marginBottom: "20px" }}
+        ></div>
+
+        <div className="items">
+          {[1, 2, 3].map((_, idx) => (
+            <div key={idx} className="skeleton-item">
+              <div className="skeleton-left">
+                <div className="skeleton-box skeleton-img"></div>
+                <div className="skeleton-details">
+                  <div className="skeleton-box skeleton-title"></div>
+                  <div className="skeleton-box skeleton-price"></div>
+                  <div className="skeleton-box skeleton-btn-group"></div>
+                </div>
+              </div>
+              <div className="skeleton-box skeleton-delete"></div>
+            </div>
+          ))}
+        </div>
+
+        <div className="btn-summary" style={{ marginTop: "30px" }}>
+          <div
+            className="shop-table"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "12px",
+            }}
+          >
+            <div
+              className="skeleton-box"
+              style={{ width: "100px", height: "20px" }}
+            ></div>
+            <div
+              className="skeleton-box"
+              style={{ width: "80px", height: "20px" }}
+            ></div>
+          </div>
+        </div>
+
+        <div className="btn-order" style={{ marginTop: "15px" }}>
+          <div
+            className="skeleton-box"
+            style={{ width: "100%", height: "45px", borderRadius: "6px" }}
+          ></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  //------------------- Render Skeleton While Loading -------------------//
   if (loading && cartItems.length === 0) {
     return (
-      <div style={{ textAlign: "center", padding: "50px" }}>
-        Loading Cart...
-      </div>
+      <PageTransition>
+        <CartSkeleton />
+      </PageTransition>
     );
   }
-  //------------------- Handel Order -------------------//
 
+  //------------------- Handle Order -------------------//
   function ButtonOrder() {
-    if (cartItems.length == 0) {
+    if (cartItems.length === 0) {
       return showError("No products were found.");
     }
     if (getSecureCookie("cth_1854")) {
       return showError("Something went wrong");
     }
   }
+
   return (
     <PageTransition>
       <div className="checkout">
@@ -282,7 +337,7 @@ export default function Cart() {
           <div className="btn-order">
             <Link
               to={
-                getSecureCookie("cth_1854") || cartItems.length == 0
+                getSecureCookie("cth_1854") || cartItems.length === 0
                   ? "/cart"
                   : "/add-card"
               }

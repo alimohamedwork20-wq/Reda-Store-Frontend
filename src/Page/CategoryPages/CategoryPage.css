@@ -1,64 +1,137 @@
-.category-products .product-card {
-  cursor: pointer;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-.category-products .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-.products-grid-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  margin-top: 20px;
+/* ==================== Container & Layout ==================== */
+.category-products {
+  padding: 20px 0 40px;
   width: 100%;
 }
 
-.product-card {
-  width: 18rem;
-  border: 1px solid #ddd;
+.category-products .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Header */
+.category-header {
+  border-bottom: 1px solid #bdbdbd;
+  margin-bottom: 25px;
+}
+
+.category-header h1 {
+  text-transform: capitalize;
+  color: #1d99f2;
+  margin-top: 20px;
+  font-size: 28px;
+}
+
+.category-header h5 {
+  border-bottom: 2px solid #2c8ae7;
+  margin: 0;
+  padding: 10px 0;
+  width: fit-content;
+  font-size: 16px;
+}
+
+/* ==================== Grid System ==================== */
+.products-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* 🔑 الحل هنا: يمنع تمطيط الكروت مجبرة لتساوي الارتفاع */
+  align-items: start;
+}
+
+/* ==================== Product Card ==================== */
+.category-products .product-card {
+  width: 100%;
+  border: 1px solid #e2e8f0;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: #fff;
-  height: fit-content; /* لكي يتمدد الكارت تلقائياً عند الضغط على Show More */
+  box-sizing: border-box;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  /* 🔑 تأكيد إضافي لضبط ارتفاع الكارت حسب محتواه فقط */
+  height: fit-content;
+  align-self: start;
 }
 
-.product-card-link {
+.category-products .product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.product-price-section-price {
   text-decoration: none;
   color: inherit;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-/* الوصف الافتراضي (سطرين فقط) */
+.product-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 8px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Image Container */
+.product-image-wrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+}
+
+.category-products .product-card .product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* إظهار الصورة بالكامل بدون اقتصاص */
+  transition: transform 0.3s ease;
+}
+
+.category-products .product-card:hover .product-image {
+  transform: scale(1.03);
+}
+
+/* Description */
 .product-desc {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 8px 0 4px 0;
-  color: #666;
-  font-size: 14px;
+  margin: 6px 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-/* في حالة الضغط على Show More يتم إزالة الاقتطاع */
 .product-desc.expanded {
   display: block;
   overflow: visible;
   text-overflow: unset;
 }
-.category-products .product-card .product-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-/* تصميم زر Show More */
+
+/* Show More Button */
 .show-more-btn {
   background: none;
   border: none;
@@ -67,41 +140,55 @@
   font-weight: 600;
   cursor: pointer;
   padding: 0;
-  margin-bottom: 12px;
-  text-align: right;
-  width: fit-content;
+  margin-bottom: 10px;
 }
 
 .show-more-btn:hover {
   text-decoration: underline;
 }
 
+/* Price & Rating */
 .product-price-section {
   margin-top: auto;
-  padding-top: 5px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
 }
+
+.product-price-section .rating {
+  color: #f59e0b;
+  font-size: 14px;
+}
+
+.product-price-section .price {
+  font-weight: 700;
+  color: #0284c7;
+  margin-top: 6px;
+  font-size: 18px;
+}
+
+/* Load More Products Section */
 .load-more-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 40px 0 20px 0;
+  margin: 35px 0 10px 0;
   width: 100%;
 }
 
-/* تنسيق زر Show More Products */
 .load-more-products-btn {
   background-color: #1d99f2;
   color: #fff;
   border: none;
-  padding: 12px 28px;
-  font-size: 16px;
+  padding: 12px 32px;
+  font-size: 15px;
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition:
     background-color 0.3s ease,
     transform 0.2s ease;
-  box-shadow: 0 2px 6px rgba(29, 153, 242, 0.3);
+  box-shadow: 0 4px 12px rgba(29, 153, 242, 0.25);
 }
 
 .load-more-products-btn:hover {
@@ -109,10 +196,15 @@
   transform: translateY(-2px);
 }
 
-.load-more-products-btn:active {
-  transform: translateY(0);
+.no-products {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 18px;
+  color: #64748b;
+  padding: 40px 0;
 }
-/* ==================== Skeleton Loading Styles ==================== */
+
+/* ==================== Skeleton Styles ==================== */
 .skeleton-card {
   pointer-events: none;
   background-color: #fff;
@@ -131,28 +223,28 @@
 .skeleton-img {
   width: 100%;
   height: 180px;
-  margin-bottom: 15px;
-}
-
-.skeleton-title {
-  height: 22px;
-  width: 80%;
   margin-bottom: 12px;
 }
 
+.skeleton-title {
+  height: 20px;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
 .skeleton-text {
-  height: 14px;
+  height: 12px;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .skeleton-text.short {
   width: 60%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .skeleton-price {
-  height: 20px;
+  height: 22px;
   width: 40%;
   margin-top: auto;
 }
@@ -163,5 +255,61 @@
   }
   100% {
     background-position: -200% 0;
+  }
+}
+
+/* ==================== Media Queries (Responsive Adjustments) ==================== */
+
+/* شاشات الموبايل المتوسطة والصغيرة (أقل من 576px) */
+@media (max-width: 576px) {
+  .products-grid-container {
+    /* عرض كرتين في السطر للموبايل بطريقة أنيقة */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .category-products .product-card {
+    padding: 10px;
+  }
+
+  .product-image-wrapper {
+    height: 130px;
+  }
+
+  .category-header h1 {
+    font-size: 22px;
+  }
+
+  .product-card h3 {
+    font-size: 14px;
+  }
+
+  .product-desc {
+    font-size: 12px;
+  }
+
+  .product-price-section .price {
+    font-size: 15px;
+  }
+
+  .product-price-section .rating {
+    font-size: 11px;
+  }
+
+  .load-more-products-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+/* للشاشات الصغير جداً (أقل من 360px) */
+@media (max-width: 360px) {
+  .products-grid-container {
+    /* كارت واحد بالسطر للموبايلات الضيقة جداً */
+    grid-template-columns: 1fr;
+  }
+
+  .product-image-wrapper {
+    height: 180px;
   }
 }

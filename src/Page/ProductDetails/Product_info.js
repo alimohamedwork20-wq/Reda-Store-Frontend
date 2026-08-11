@@ -154,7 +154,7 @@ export default function Product_info({ product }) {
     return stars;
   };
   return (
-    <div className="item-name">
+    <div className="item-name Product_info">
       <h1>{product?.title}</h1>
       <div className="stars">{renderStars(product.rating)}</div>
       <p className="price">

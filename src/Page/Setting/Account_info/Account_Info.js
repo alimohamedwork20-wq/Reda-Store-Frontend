@@ -508,7 +508,7 @@ export default function Account_info() {
               fontSize: "20px",
               color: "#fff",
             }}
-            className="btn btn-primary"
+            className="logout"
           >
             Logout
           </button>

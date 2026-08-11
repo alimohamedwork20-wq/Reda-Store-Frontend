@@ -151,28 +151,33 @@ export default function TopHeaders() {
         <Link className="logo" to="/">
           <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="Logo" />
         </Link>
-        <Search />
-        <div className="header-icons">
-          <Tippy content="Favorite" placement="bottom">
-            <div
-              className="icon"
-              style={{ cursor: "pointer" }}
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasScrolling"
-            >
-              <i className="fa-regular fa-heart"></i>
-              <span className="count">{numberF}</span>
-            </div>
-          </Tippy>
+        <div className="header-icons-and-search">
+          {" "}
+          <div className="search-box-container">
+            <Search />
+          </div>
+          <div className="header-icons">
+            <Tippy content="Favorite" placement="bottom">
+              <div
+                className="icon"
+                style={{ cursor: "pointer" }}
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasScrolling"
+              >
+                <i className="fa-regular fa-heart"></i>
+                <span className="count">{numberF}</span>
+              </div>
+            </Tippy>
 
-          <Tippy content="Cart" placement="bottom">
-            <div className="icon">
-              <Link to={"cart"}>
-                <i className="text-black fa-solid fa-cart-shopping"></i>
-              </Link>
-              <span className="count">{number}</span>
-            </div>
-          </Tippy>
+            <Tippy content="Cart" placement="bottom">
+              <div className="icon">
+                <Link to={"cart"}>
+                  <i className="text-black fa-solid fa-cart-shopping"></i>
+                </Link>
+                <span className="count">{number}</span>
+              </div>
+            </Tippy>
+          </div>
         </div>
       </div>
 
