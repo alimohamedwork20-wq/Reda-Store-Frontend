@@ -4,7 +4,6 @@ import PageTransition from "../../Components/Helper/PageTransition";
 import ArrowUp from "../../Components/Helper/ArrowUp";
 import { accountService } from "../../Components/Apis/accountService";
 import "./CategoryPage.css";
-
 // مكون معزول لكل كارت منتج لإدارة حالته الخاصة بشكل مستقل
 function ProductCard({ item }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -125,6 +124,7 @@ export default function CategoryPage() {
 
   return (
     <PageTransition>
+      <ArrowUp></ArrowUp>
       <div className="category-products">
         <div className="container">
           {/* الهيدر */}

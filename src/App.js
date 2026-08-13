@@ -52,6 +52,7 @@ function App() {
             },
           }}
         ></Toaster>
+
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/products" element={<Navigate to="/home" replace />} />

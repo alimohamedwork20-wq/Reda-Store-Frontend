@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./About.css";
 import PageTransition from "../../Components/Helper/PageTransition";
 import Footer from "../../Components/Footer/Footer";
+import ArrowUp from "../../Components/Helper/ArrowUp";
 
 export default function About() {
   useEffect(() => {
@@ -26,6 +27,8 @@ export default function About() {
 
   return (
     <PageTransition>
+      {" "}
+      <ArrowUp></ArrowUp>
       <div className="about-modern-container">
         {/* 1. PREMIUM HERO SECTION */}
         <header
@@ -168,7 +171,6 @@ export default function About() {
           </div>
         </section>
       </div>
-
       <Footer></Footer>
     </PageTransition>
   );

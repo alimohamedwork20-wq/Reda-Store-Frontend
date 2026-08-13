@@ -5,6 +5,7 @@ import "./SearchPage.css";
 import PageTransition from "../../Components/Helper/PageTransition";
 import { accountService } from "../../Components/Apis/accountService";
 import { getSecureCookie } from "../../Components/Helper/cookieUtils";
+import ArrowUp from "../../Components/Helper/ArrowUp";
 
 export default function SearchPage() {
   const [loading, setLoading] = useState(true);
@@ -95,6 +96,8 @@ export default function SearchPage() {
 
   return (
     <PageTransition>
+      <ArrowUp></ArrowUp>
+
       {/* 🎯 تم إزالة transform: translateX(3%) */}
       <div className="search-page">
         {loading ? (
