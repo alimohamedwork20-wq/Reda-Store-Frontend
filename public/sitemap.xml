@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- الصفحة الرئيسية -->
+  <url>
+    <loc>https://reda-store-five.vercel.app/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/home</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- صفحات الكاتيجوري / الأقسام (عدّل الأسماء حسب الأقسام لديك) -->
+  <url>
+    <loc>https://reda-store-five.vercel.app/category/mens-watches</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/category/smartphones</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/category/laptops</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/category/accessories</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/category/Tablets</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/category/mobile-accessories</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- الصفحات التعريفية العامة -->
+  <url>
+    <loc>https://reda-store-five.vercel.app/about</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/contact</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/blog</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- البحث والمصادقة -->
+  <url>
+    <loc>https://reda-store-five.vercel.app/search</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/login</loc>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://reda-store-five.vercel.app/register</loc>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>
