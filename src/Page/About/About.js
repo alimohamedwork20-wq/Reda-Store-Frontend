@@ -27,7 +27,7 @@ export default function About() {
 
   return (
     <PageTransition>
-      {" "}
+      <title>About Us - Reda Store | Learn More About Our Store</title>{" "}
       <ArrowUp></ArrowUp>
       <div className="about-modern-container">
         {/* 1. PREMIUM HERO SECTION */}

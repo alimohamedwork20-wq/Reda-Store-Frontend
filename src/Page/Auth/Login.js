@@ -66,6 +66,7 @@ export default function Login() {
 
   return (
     <PageTransition>
+      <title>Login | Reda Store</title>
       <div className="login">
         <div className="login-form">
           <h2>

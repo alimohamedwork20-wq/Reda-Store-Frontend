@@ -155,6 +155,7 @@ export default function Product_info({ product }) {
   };
   return (
     <div className="item-name Product_info">
+      <title>{product.title + " | Reda store"}</title>
       <h1>{product?.title}</h1>
       <div className="stars">{renderStars(product.rating)}</div>
       <p className="price">

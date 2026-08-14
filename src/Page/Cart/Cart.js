@@ -177,6 +177,7 @@ export default function Cart() {
 
   return (
     <PageTransition>
+      <title>Cart | Reda store</title>
       <div className="checkout">
         <div className="ordersummary">
           <h1>Order Summary</h1>

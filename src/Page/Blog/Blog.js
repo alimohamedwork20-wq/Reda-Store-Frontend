@@ -116,6 +116,7 @@ function BlogCard({ item, isOpen, toggle }) {
   return (
     <PageTransition>
       {" "}
+      <title>Blog - Reda Store | Shopping Tips & Guides</title>
       <div className="blog-card">
         {/* الصورة + loading */}
         <div className="image-wrapper">

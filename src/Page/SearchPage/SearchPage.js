@@ -97,7 +97,7 @@ export default function SearchPage() {
   return (
     <PageTransition>
       <ArrowUp></ArrowUp>
-
+      <title>Search | Reda store</title>
       {/* 🎯 تم إزالة transform: translateX(3%) */}
       <div className="search-page">
         {loading ? (

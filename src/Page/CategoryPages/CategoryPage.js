@@ -91,17 +91,18 @@ function ProductCard({ item }) {
 export default function CategoryPage() {
   const location = useLocation();
   const [products, setProducts] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(8);
 
   const path = location.pathname;
   const lastPart = path.split("/").filter(Boolean).pop();
-
+  const [category, setCategory] = useState("");
   useEffect(() => {
     setLoading(true);
     setProducts([]);
     setVisibleCount(8);
-
+    setCategory(lastPart.charAt(0).toUpperCase() + lastPart.slice(1));
     async function GetCategorys() {
       try {
         const res = await accountService.GetProducts(lastPart);
@@ -125,6 +126,7 @@ export default function CategoryPage() {
   return (
     <PageTransition>
       <ArrowUp></ArrowUp>
+      <title>{category + " - Reda Store | " + category}</title>
       <div className="category-products">
         <div className="container">
           {/* الهيدر */}

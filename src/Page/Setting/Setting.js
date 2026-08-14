@@ -9,6 +9,7 @@ export default function Setting() {
 
   return (
     <PageTransition>
+      <title>Settings | Reda store</title>
       <div className="container-setting">
         <div className="content">
           <div className="container-settingLeft">

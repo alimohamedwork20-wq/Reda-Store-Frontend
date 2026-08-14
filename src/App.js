@@ -57,7 +57,6 @@ function App() {
           <Routes>
             <Route path="/products" element={<Navigate to="/home" replace />} />
             <Route path="/" element={<Home></Home>}></Route>
-            <Route path="/home" element={<Home></Home>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
             <Route path="/register" element={<Register></Register>}></Route>
             <Route

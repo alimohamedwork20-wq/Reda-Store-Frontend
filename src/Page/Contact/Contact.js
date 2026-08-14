@@ -63,6 +63,7 @@ export default function Contact() {
 
   return (
     <PageTransition>
+      <title>Contact Us - Reda Store | Get in Touch</title>
       <div className="contact-page">
         <div className="container">
           <h2>

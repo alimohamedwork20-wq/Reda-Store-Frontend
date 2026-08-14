@@ -67,6 +67,7 @@ export default function Register() {
 
   return (
     <PageTransition>
+      <title>Register | Reda Store</title>
       <div className="login">
         <div className="login-form">
           <h2>

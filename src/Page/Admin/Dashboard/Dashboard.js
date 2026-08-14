@@ -10,6 +10,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container" dir="rtl">
+      <title>Dashboard | Reda store</title>
       {/* الشريط الجانبي Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-brand">لوحة التحكم</div>

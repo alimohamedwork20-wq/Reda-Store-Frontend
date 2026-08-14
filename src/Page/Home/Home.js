@@ -12,6 +12,7 @@ import TopCategorySection from "../../Components/Design/TopCategorySection";
 export default function Home() {
   return (
     <PageTransition>
+      <title>Reda Store - Online Shopping for Electronics & More</title>
       <HeroSlider></HeroSlider>
       <SlideProducts
         path={"product"}
