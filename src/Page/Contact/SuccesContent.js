@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
 import PageTransition from "../../Components/Helper/PageTransition";
 import { useNavigate } from "react-router-dom";
-import "@lottiefiles/dotlottie-wc";
 
 export default function SuccessContent() {
   const navigate = useNavigate();
