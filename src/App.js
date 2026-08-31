@@ -91,12 +91,13 @@ function App() {
             ></Route>
             <Route path="/search" element={<SearchPage></SearchPage>}></Route>
             <Route path="/blog" element={<Blog></Blog>}></Route>
-            <Route
-              path="/admin"
-              element={<AdminDashboard></AdminDashboard>}
-            ></Route>
+
             <Route path="/about" element={<About></About>}></Route>
             <Route element={<ProtectedRoute />}>
+              <Route
+                path="/admin"
+                element={<AdminDashboard></AdminDashboard>}
+              ></Route>
               <Route path="/add-card" element={<AddCard></AddCard>}></Route>
               <Route path="/setting" element={<Setting></Setting>}>
                 <Route index element={<Account_info />} />
