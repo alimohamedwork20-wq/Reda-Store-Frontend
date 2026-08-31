@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Headers.css";
 import Search from "../Search/Search";
@@ -7,13 +7,13 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { accountService } from "../Apis/accountService";
 import { getSecureCookie } from "../Helper/cookieUtils";
+
 export default function TopHeaders() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [favoriteItems, setFavoriteItems] = useState([]);
   const [handelCart, setHandelCart] = useState(0);
   const token = getSecureCookie("tth_1854");
-  const userId = Number(getSecureCookie("ith_1854"));
 
   const number = cartItems.length;
   const numberF = favoriteItems.length;
@@ -31,15 +31,17 @@ export default function TopHeaders() {
   //---------------- Get Product From Cart ----------------//
   useEffect(() => {
     const fetchCart = async () => {
-      if (token && userId && fetchCart) {
-        try {
-          const response = await accountService.GetProductsInCart(userId);
-          if (response && response.data) {
-            setCartItems(response.data);
-          }
-        } catch (error) {
-          console.error("Error fetching favorites from server:", error);
-        }
+      if (!token) {
+        setCartItems([]);
+        return;
+      }
+
+      try {
+        const response = await accountService.GetProductsInCart();
+        setCartItems(Array.isArray(response?.data) ? response.data : []);
+      } catch (error) {
+        console.error("Error fetching cart from server:", error);
+        setCartItems([]);
       }
     };
 
@@ -48,41 +50,49 @@ export default function TopHeaders() {
     return () => {
       window.removeEventListener("cartUpdated", fetchCart);
     };
-  }, [token, userId, setFavoriteItems, handelCart]);
+  }, [token, handelCart]);
 
   //---------------- Get Product From Favorite ----------------//
   useEffect(() => {
     const fetchFavorites = async () => {
-      if (token && userId && setFavoriteItems) {
-        try {
-          const response = await accountService.GetProductsFromFavorite(userId);
-          if (response && response.data) {
-            setFavoriteItems(response.data);
-          }
-        } catch (error) {
-          console.error("Error fetching favorites from server:", error);
-        }
+      if (!token) {
+        setFavoriteItems([]);
+        return;
+      }
+
+      try {
+        const response = await accountService.GetProductsFromFavorite();
+        setFavoriteItems(Array.isArray(response?.data) ? response.data : []);
+      } catch (error) {
+        console.error("Error fetching favorites from server:", error);
+        setFavoriteItems([]);
       }
     };
+
     fetchFavorites();
     window.addEventListener("favUpdated", fetchFavorites);
     return () => {
       window.removeEventListener("favUpdated", fetchFavorites);
     };
-  }, [token, userId, setFavoriteItems]);
+  }, [token]);
 
   //----------------  Add Product In Cart ----------------//
   function AddToCart(item) {
-    if (token && userId) {
-      accountService
-        .AddToCart(userId, item.id)
-        .then(() => {
-          setHandelCart((prev) => prev + 1);
-        })
-        .catch((err) => {
-          console.error("Error syncing cart addition with server:", err);
-        });
+    if (!token) {
+      toast.error("Please login first to manage your Cart!");
+      return;
     }
+
+    accountService
+      .AddToCart(item.id)
+      .then(() => {
+        setHandelCart((prev) => prev + 1);
+        window.dispatchEvent(new Event("cartUpdated"));
+      })
+      .catch((err) => {
+        console.error("Error syncing cart addition with server:", err);
+        toast.error(err.response?.data || "Could not add product to cart");
+      });
 
     toast.success(
       <div className="stoast-wrapper">
@@ -121,23 +131,29 @@ export default function TopHeaders() {
 
   //----------------  Delete Product From Favorite ----------------//
   const handleDeleteProductFromFav = (itemId) => {
-    if (token && userId) {
-      accountService
-        .RemoveFromFavorIte(userId, itemId)
-        .then(() =>
-          setFavoriteItems((prev) => prev.filter((item) => item.id !== itemId)),
-        )
-        .then(() => setHandelCart((prev) => prev + 1))
-        .catch((err) => {
-          console.error("Error deleting favorite from server:", err);
-        });
+    if (!token) {
+      toast.error("Please login first to manage your Favorite!");
+      return;
     }
+
+    accountService
+      .RemoveFromFavorIte(itemId)
+      .then(() => {
+        setFavoriteItems((prev) => prev.filter((item) => item.id !== itemId));
+        setHandelCart((prev) => prev + 1);
+        window.dispatchEvent(new Event("favUpdated"));
+      })
+      .catch((err) => {
+        console.error("Error deleting favorite from server:", err);
+        toast.error(err.response?.data || "Could not remove favorite");
+      });
   };
 
   function CheckProductInCart(item) {
     if (!item) return false;
     return cartItems.some((p) => p.id == item);
   }
+
   return (
     <div
       style={{
@@ -152,7 +168,6 @@ export default function TopHeaders() {
           <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="Logo" />
         </Link>
         <div className="header-icons-and-search">
-          {" "}
           <div className="search-box-container">
             <Search />
           </div>
