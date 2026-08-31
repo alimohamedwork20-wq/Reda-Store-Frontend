@@ -4,7 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import PageTransition from "../../Components/Helper/PageTransition";
 import { accountService } from "../../Components/Apis/accountService";
 import { showError, showSuccess } from "../../Components/Helper/toastCustom";
-import { setUserCookies } from "../../Components/Helper/cookieUtils";
+import {
+  setUserCookies,
+  removeSecureCookie,
+} from "../../Components/Helper/cookieUtils";
 
 export default function Login() {
   const [Email, setEmail] = useState("");
@@ -22,8 +25,6 @@ export default function Login() {
       const res = await accountService.login(Email.trim(), Password.trim());
       const userData = res.data;
 
-      // The JWT is the only client-side source of authenticated identity.
-      // Do not persist the numeric user id in a separate cookie.
       setUserCookies({
         tth_1854: userData.token,
         nth_1854: userData.name,
@@ -33,6 +34,9 @@ export default function Login() {
         ath_1854: userData.avatar || null,
         tfh_1854: userData.two_Factor,
       });
+
+      // Remove the legacy client-side user id cookie if it exists.
+      removeSecureCookie("ith_1854");
 
       if (userData.status === true) {
         if (!userData.two_Factor) {
