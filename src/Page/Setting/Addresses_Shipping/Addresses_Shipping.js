@@ -5,7 +5,7 @@ import { showError, showSuccess } from "../../../Components/Helper/toastCustom";
 import { getSecureCookie } from "../../../Components/Helper/cookieUtils";
 
 export default function AddressesShipping() {
-  const userId = Number(getSecureCookie("ith_1854"));
+  const token = Number(getSecureCookie("tth_1854"));
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [newAddress, setNewAddress] = useState({
@@ -13,15 +13,12 @@ export default function AddressesShipping() {
     city: "",
     details: "",
     phone: "",
-    userId: userId,
     isDefault: false,
   });
-
   //------------------------- Get Addresses -------------------------//
   const fetchAddresses = useCallback(async () => {
-    if (!userId) return;
     try {
-      const res = await accountService.GetAddresses(userId);
+      const res = await accountService.GetAddresses();
       if (res && res.data) {
         let fetchedAddresses = res.data;
         if (fetchedAddresses.length === 1 && !fetchedAddresses[0].isDefault) {
@@ -35,7 +32,7 @@ export default function AddressesShipping() {
     } catch (error) {
       showError("Error fetching addresses");
     }
-  }, [userId]);
+  }, [token]);
 
   useEffect(() => {
     fetchAddresses();
@@ -51,7 +48,6 @@ export default function AddressesShipping() {
     e.preventDefault();
     const addressToAdd = {
       ...newAddress,
-      userId: userId,
       isDefault: addresses.length === 0,
     };
 
@@ -66,7 +62,6 @@ export default function AddressesShipping() {
         city: "",
         details: "",
         phone: "",
-        userId: userId,
         isDefault: false,
       });
       setShowForm(false);
@@ -83,7 +78,7 @@ export default function AddressesShipping() {
     setAddresses((prev) => prev.filter((address) => address.id !== id));
 
     try {
-      await accountService.DeleteAddress(id, userId);
+      await accountService.DeleteAddress(id);
       await fetchAddresses();
       showSuccess("Address deleted!");
     } catch (error) {
@@ -103,7 +98,7 @@ export default function AddressesShipping() {
     );
 
     try {
-      await accountService.SetDefaultAddress(id, userId);
+      await accountService.SetDefaultAddress(id);
       showSuccess("Default shipping address updated!");
     } catch (error) {
       // Rollback لو حصل خطأ

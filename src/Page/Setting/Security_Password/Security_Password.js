@@ -50,7 +50,6 @@ export default function SecurityPassword() {
     try {
       setLoadingPassword(true);
       const res = await accountService.changePassword(
-        userId,
         passwordData.currentPassword,
         passwordData.newPassword,
       );

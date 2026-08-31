@@ -63,8 +63,8 @@ export default function Account_info() {
   async function changeName() {
     if (getSecureCookie("nth_1854") !== formData.firstName) {
       try {
-        const res = await accountService.changeName(userId, formData.firstName);
-        setSecureCookie("name", res.data);
+        const res = await accountService.changeName(formData.firstName);
+        setSecureCookie("nth_1854", res.data);
         showSuccess("Name updated successfully!");
       } catch (error) {
         console.error("Name Error:", error);
@@ -101,8 +101,8 @@ export default function Account_info() {
   async function changeEmail() {
     setLoadingEmail(true);
     try {
-      const res = await accountService.changeEmail(userId, NewEmail, Otp);
-      setSecureCookie("email", res.data);
+      const res = await accountService.changeEmail(NewEmail, Otp);
+      setSecureCookie("eth_1854", res.data);
       showSuccess("Email updated successfully!");
       setTimeout(() => {
         window.location.reload();
@@ -119,12 +119,11 @@ export default function Account_info() {
     try {
       setLoadingPhone(true);
       const res = await accountService.savePhone(
-        userId,
         phoneNumber,
         emailUser,
         phoneOtp,
       );
-      setSecureCookie("phone", res.data);
+      setSecureCookie("pth_1854", res.data);
       showSuccess("Phone added successfully!");
       setTimeout(() => {
         window.location.reload();
@@ -140,12 +139,11 @@ export default function Account_info() {
   async function UpdatePhone() {
     try {
       const res = await accountService.savePhone(
-        userId,
         phoneNumber,
         emailUser,
         phoneOtp,
       );
-      setSecureCookie("phone", res.data);
+      setSecureCookie("pth_1854", res.data);
       showSuccess("Phone updated successfully!");
       setTimeout(() => {
         window.location.reload();

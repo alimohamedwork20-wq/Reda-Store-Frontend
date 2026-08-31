@@ -9,13 +9,11 @@ import TopHeaders from "./Components/Headers/TopHeaders";
 import ButtonHeaders from "./Components/Headers/ButtonHeaders";
 import SearchPage from "./Page/SearchPage/SearchPage";
 import Contact from "./Page/Contact/Contact";
-import SuccesContent from "./Page/Contact/SuccesContent";
 import Blog from "./Page/Blog/Blog";
 import About from "./Page/About/About";
 import Setting from "./Page/Setting/Setting";
 import Login from "./Page/Auth/Login";
 import Register from "./Page/Auth/Register";
-import SettingRight from "./Page/Setting/SettingRight";
 import Account_info from "./Page/Setting/Account_info/Account_Info";
 import SecurityPassword from "./Page/Setting/Security_Password/Security_Password";
 import AddressesShipping from "./Page/Setting/Addresses_Shipping/Addresses_Shipping";
@@ -85,10 +83,6 @@ function App() {
             ></Route>
             <Route path="/cart" element={<Cart></Cart>}></Route>
             <Route path="/contact" element={<Contact></Contact>}></Route>
-            <Route
-              path="/contact/succes-content"
-              element={<SuccesContent></SuccesContent>}
-            ></Route>
             <Route path="/search" element={<SearchPage></SearchPage>}></Route>
             <Route path="/blog" element={<Blog></Blog>}></Route>
 
