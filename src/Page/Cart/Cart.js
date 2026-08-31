@@ -10,14 +10,13 @@ import { showError } from "../../Components/Helper/toastCustom";
 
 export default function Cart() {
   const token = getSecureCookie("tth_1854");
-  const userId = Number(getSecureCookie("ith_1854"));
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
   const [handelCart, setHandelCart] = useState(0);
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      if (!token || !userId) {
+      if (!token) {
         setCartItems([]);
         setLoading(false);
         return;
@@ -36,7 +35,7 @@ export default function Cart() {
     };
 
     fetchCartItems();
-  }, [token, userId, handelCart]);
+  }, [token, handelCart]);
 
   const total = cartItems.reduce(
     (acc, item) => acc + Number(item.price || 0) * Number(item.quantity || 1),
@@ -44,7 +43,7 @@ export default function Cart() {
   );
 
   const updateQuantity = async (productId, newQty) => {
-    if (!token || !userId || newQty < 1) return;
+    if (!token || newQty < 1) return;
 
     const previousItems = cartItems;
     setCartItems((prevItems) =>
@@ -55,6 +54,7 @@ export default function Cart() {
 
     try {
       await accountService.UpdateCartQuantity(productId, newQty);
+      window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       console.error("Error updating quantity on server:", error);
       setCartItems(previousItems);
@@ -71,7 +71,7 @@ export default function Cart() {
   };
 
   const handleDelete = async (productId) => {
-    if (!token || !userId) return;
+    if (!token) return;
 
     try {
       await accountService.RemoveFromCart(productId);
@@ -85,7 +85,7 @@ export default function Cart() {
   };
 
   const DeleteAllProductsFromCart = async () => {
-    if (!token || !userId) return;
+    if (!token) return;
 
     try {
       await accountService.RemoveAllProductsFromCart();
