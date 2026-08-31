@@ -41,7 +41,7 @@ export const accountService = {
     apiClient.post(`Products/product/${productId}/add-to-favorite`)
       .then(() => showSuccess("Product added to Favorite successfully"))
       .catch((error) => {
-        showError("An error occurred during the update");
+        showError(error.response?.data || "An error occurred during the update");
         return Promise.reject(error);
       }),
 
@@ -49,7 +49,7 @@ export const accountService = {
     apiClient.delete(`Products/product/${productId}/remove-from-favorite`)
       .then(() => showSuccess("Removed Product from Favorite successfully"))
       .catch((error) => {
-        showError("An error occurred during deletion.");
+        showError(error.response?.data || "An error occurred during deletion.");
         return Promise.reject(error);
       }),
 
