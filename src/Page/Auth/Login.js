@@ -12,6 +12,7 @@ export default function Login() {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError(false);
@@ -20,24 +21,27 @@ export default function Login() {
       setLoading(true);
       const res = await accountService.login(Email.trim(), Password.trim());
       const userData = res.data;
+
+      // The JWT is the only client-side source of authenticated identity.
+      // Do not persist the numeric user id in a separate cookie.
       setUserCookies({
         tth_1854: userData.token,
         nth_1854: userData.name,
         eth_1854: userData.email,
         rth_1854: userData.role,
-        ith_1854: userData.id ? String(userData.id) : null,
         pth_1854: userData.phone || null,
         ath_1854: userData.avatar || null,
         tfh_1854: userData.two_Factor,
       });
-      if (userData.status == true) {
+
+      if (userData.status === true) {
         if (!userData.two_Factor) {
           showSuccess(`Welcome back, ${userData.name}!`);
           navigate("/", { replace: true });
         } else {
           navigate("/two-factor-auth", { replace: true });
         }
-      } else if (userData.status == false) {
+      } else if (userData.status === false) {
         showError("الحساب معطل");
       }
     } catch (error) {
@@ -46,9 +50,9 @@ export default function Login() {
 
       const status = error.response?.status;
       if (status === 404 || status === 400 || status === 401 || !status) {
-        if (Email.includes("@"))
+        if (Email.includes("@")) {
           showError("Invalid email or password. Please try again.");
-        else {
+        } else {
           showError("Invalid phone or password. Please try again.");
         }
       } else {
