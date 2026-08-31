@@ -34,6 +34,8 @@ export const accountService = {
 
   AddToCart: (productId) => apiClient.post(`Products/product/${productId}/add-to-cart`),
   GetProductsInCart: () => apiClient.get("Products/cart"),
+  UpdateCartQuantity: (productId, quantity) =>
+    apiClient.put(`Products/cart/${productId}/quantity/${quantity}`),
   RemoveFromCart: (productId) => apiClient.delete(`Products/cart/delete/${productId}`),
   RemoveAllProductsFromCart: () => apiClient.delete("Products/cart/delete-all"),
 
