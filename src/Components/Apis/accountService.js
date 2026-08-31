@@ -3,25 +3,13 @@ import apiClient from "./apiClient";
 
 export const accountService = {
   changeName: (name) => apiClient.post("Account/change-name", { Name: name }),
-
   sendOtp: (email) => apiClient.post("Auth/send-otp", { Email: email }),
-
-  changeEmail: (newEmail, code) =>
-    apiClient.post("Account/change-email", { NewEmail: newEmail, Code: code }),
-
-  savePhone: (phone, email, code) =>
-    apiClient.post("Account/add-phone", { Phone: phone, Email: email, Code: code }),
-
-  changePassword: (oldPassword, newPassword) =>
-    apiClient.post("Account/change-password", { OldPassword: oldPassword, NewPassword: newPassword }),
-
+  changeEmail: (newEmail, code) => apiClient.post("Account/change-email", { NewEmail: newEmail, Code: code }),
+  savePhone: (phone, email, code) => apiClient.post("Account/add-phone", { Phone: phone, Email: email, Code: code }),
+  changePassword: (oldPassword, newPassword) => apiClient.post("Account/change-password", { OldPassword: oldPassword, NewPassword: newPassword }),
   login: (email, password) => apiClient.post("Auth/login", { Email: email, Password: password }),
-
-  register: (email, password, name) =>
-    apiClient.post("Auth/register", { Email: email, Password: password, Name: name }),
-
-  contact: (name, email, message) =>
-    apiClient.post("WebServices/submit-contact-form", { Email: email, Message: message, Name: name }),
+  register: (email, password, name) => apiClient.post("Auth/register", { Email: email, Password: password, Name: name }),
+  contact: (name, email, message) => apiClient.post("WebServices/submit-contact-form", { Email: email, Message: message, Name: name }),
 
   report: (category, subject, description, screenshot) => {
     const formData = new FormData();
@@ -41,7 +29,6 @@ export const accountService = {
       headers: { "Content-Type": "multipart/form-data" },
     });
   },
-
   RemoveImageProfile: () => apiClient.delete("Account/remove-profile-image"),
   deleteAccount: () => apiClient.delete("Account/delete-account"),
 
@@ -69,7 +56,8 @@ export const accountService = {
   GetProductsFromFavorite: () => apiClient.get("Products/product/show-favoriteItems"),
   ForgotPassword: (email) => apiClient.post("Auth/forgot-password", { Email: email }),
   CheckCodeToResetPassword: (email, code) => apiClient.post("Auth/check-code", { Email: email, Code: code }),
-  ResetPassword: (email, password) => apiClient.post("Auth/reset-password", { Email: email, NewPassword: password }),\n  GetProductWithSearch: (term) => apiClient.get(`Products/products/search?term=${encodeURIComponent(term)}`),
+  ResetPassword: (email, password) => apiClient.post("Auth/reset-password", { Email: email, NewPassword: password }),
+  GetProductWithSearch: (term) => apiClient.get(`Products/products/search?term=${encodeURIComponent(term)}`),
   GetProducts: (api) => apiClient.get(`Products/products/category/${encodeURIComponent(api)}`),
 
   GetAddresses: () => apiClient.get("Account/get-user-addresses"),
