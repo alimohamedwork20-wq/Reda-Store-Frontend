@@ -20,7 +20,6 @@ const safeStringify = (value) => {
 
 export const setSecureCookie = (key, value, options = {}) => {
   const stringValue = safeStringify(value);
-  // تصحيح: js-cookie تنظر لـ expires بعدد الأيام (1 = 24 ساعة)
   const defaultOptions = { path: "/", expires: 1, ...options };
 
   if (isDevelopment) {
@@ -56,7 +55,6 @@ export const getSecureCookie = (key, parseJson = false) => {
         resultValue = decrypted;
       }
     } catch {
-      // في حالة فشل التفكيك، سيتم العودة للقيمة الأصلية
       resultValue = value;
     }
   }
@@ -76,12 +74,13 @@ export const removeSecureCookie = (key, options = {}) => {
   Cookies.remove(key, { path: "/", ...options });
 };
 
+// Identity is taken from the JWT on the backend. There is intentionally no
+// separate user-id cookie here.
 const USER_FIELDS = [
   "tth_1854",
   "nth_1854",
   "eth_1854",
   "rth_1854",
-  "ith_1854",
   "pth_1854",
   "ath_1854",
   "tfh_1854",
@@ -104,4 +103,7 @@ export const getUserCookies = () => {
 
 export const clearUserCookies = () => {
   USER_FIELDS.forEach((field) => removeSecureCookie(field));
+
+  // Remove the legacy user-id cookie left by older versions.
+  removeSecureCookie("ith_1854");
 };
