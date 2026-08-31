@@ -11,12 +11,13 @@ import { showError } from "../Helper/toastCustom";
 import toast from "react-hot-toast";
 import { accountService } from "../Apis/accountService";
 import { getSecureCookie } from "../Helper/cookieUtils";
+
 export default function SlideProducts({ title, dis, style, api, path }) {
   const [category, setCategory] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [favoriteItems, setFavoriteItems] = useState([]);
-  const userId = Number(getSecureCookie("ith_1854"));
   const token = getSecureCookie("tth_1854");
+
   //-------------------- Get Product --------------------//
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,33 +33,43 @@ export default function SlideProducts({ title, dis, style, api, path }) {
 
   //-------------------- Get Product From Favorites --------------------//
   useEffect(() => {
-    if (userId && token) {
-      const GetProductsFromFavorite = async () => {
-        try {
-          const res = await accountService.GetProductsFromFavorite(userId);
-          if (res.data.length != 0) setFavoriteItems(res.data);
-        } catch (err) {
-          showError(
-            "An error occurred while retrieving products from Favorites",
-          );
-        }
-      };
-      GetProductsFromFavorite();
+    if (!token) {
+      setFavoriteItems([]);
+      return;
     }
-  }, []);
+
+    const getProductsFromFavorite = async () => {
+      try {
+        const res = await accountService.GetProductsFromFavorite();
+        setFavoriteItems(Array.isArray(res.data) ? res.data : []);
+      } catch (err) {
+        showError(
+          "An error occurred while retrieving products from Favorites",
+        );
+      }
+    };
+
+    getProductsFromFavorite();
+  }, [token]);
+
   //-------------------- Get Product From Cart --------------------//
   useEffect(() => {
-    if (userId && token) {
-      accountService
-        .GetProductsInCart(userId)
-        .then((data) => setCartItems(data.data))
-        .catch(() => {
-          showError("An error occurred while retrieving products from Cart");
-        });
+    if (!token) {
+      setCartItems([]);
+      return;
     }
-  }, []);
+
+    accountService
+      .GetProductsInCart()
+      .then((data) => setCartItems(Array.isArray(data.data) ? data.data : []))
+      .catch(() => {
+        showError("An error occurred while retrieving products from Cart");
+      });
+  }, [token]);
+
   const isInFav = (id) => favoriteItems.some((fav) => fav.id == id);
   const isInCart = (id) => cartItems.some((cart) => cart.id == id);
+
   //-------------------- handle Share --------------------//
   const handleShare = (item) => {
     const url = `${window.location.origin}/product/${item.id}`;
@@ -72,32 +83,36 @@ export default function SlideProducts({ title, dis, style, api, path }) {
 
   //-------------------- Add to Cart --------------------//
   function handelCart(item) {
-    if (token) {
-      setCartItems((prev) => [...prev, item]);
-      accountService
-        .AddToCart(userId, item.id)
-        .then(() => {
-          window.dispatchEvent(new Event("cartUpdated"));
-        })
-        .catch((error) => {
-          console.error("Error adding product to cart on server:", error);
-        });
-      toast.success(
-        <div className="stoast-wrapper">
-          <img src={item.thumbnail} className="stoast-img" alt={item.title} />
-          <div className="stoast-content">
-            <strong>{item.title}</strong>
-            <p>Added to cart</p>
-            <Link to="/cart">
-              <button className="btn">View</button>
-            </Link>
-          </div>
-        </div>,
-        { duration: 3000 },
-      );
-    } else {
+    if (!token) {
       showError("Please login first to manage your Cart!");
+      return;
     }
+
+    setCartItems((prev) => [...prev, item]);
+    accountService
+      .AddToCart(item.id)
+      .then(() => {
+        window.dispatchEvent(new Event("cartUpdated"));
+      })
+      .catch((error) => {
+        console.error("Error adding product to cart on server:", error);
+        setCartItems((prev) => prev.filter((cart) => cart.id != item.id));
+        showError(error.response?.data || "Could not add product to cart");
+      });
+
+    toast.success(
+      <div className="stoast-wrapper">
+        <img src={item.thumbnail} className="stoast-img" alt={item.title} />
+        <div className="stoast-content">
+          <strong>{item.title}</strong>
+          <p>Added to cart</p>
+          <Link to="/cart">
+            <button className="btn">View</button>
+          </Link>
+        </div>
+      </div>,
+      { duration: 3000 },
+    );
   }
 
   //-------------------- handle Favorite Toggle --------------------//
@@ -106,58 +121,59 @@ export default function SlideProducts({ title, dis, style, api, path }) {
       showError("Please login first to manage your favorites!");
       return;
     }
+
     const currentlyFav = isInFav(item.id);
 
     if (!currentlyFav) {
       setFavoriteItems((prev) => [...prev, item]);
       accountService
-        .AddToFavorite(userId, item.id)
+        .AddToFavorite(item.id)
         .then(() => {
           window.dispatchEvent(new Event("favUpdated"));
         })
         .catch((error) => {
           console.error("Error syncing favorite status:", error);
+          setFavoriteItems((prev) => prev.filter((fav) => fav.id != item.id));
+          showError(error.response?.data || "Could not add product to Favorite");
         });
     } else {
       setFavoriteItems((prev) => prev.filter((fav) => fav.id != item.id));
       accountService
-        .RemoveFromFavorIte(userId, item.id)
+        .RemoveFromFavorIte(item.id)
         .then(() => {
           window.dispatchEvent(new Event("favUpdated"));
         })
         .catch((error) => {
           console.error("Error deleting favorite:", error);
+          setFavoriteItems((prev) => [...prev, item]);
+          showError(error.response?.data || "Could not remove product from Favorite");
         });
     }
   }
+
   //-------------------- handle Total Rating --------------------//
   const renderStars = (rating) => {
     const numRating = parseFloat(rating) || 0;
-
-    // 2. حساب عدد النجوم
-    const fullStars = Math.floor(numRating); // عدد النجوم الكاملة (مثال: 3.5 → 3)
-    const hasHalfStar = numRating % 1 >= 0.5; // هل يوجد نصف نجمة؟ (0.5 فأكثر)
-    const emptyStars = 5 - Math.ceil(numRating); // عدد النجوم الفارغة (مثال: 3.5 → 5 - 4 = 1)
-
+    const fullStars = Math.floor(numRating);
+    const hasHalfStar = numRating % 1 >= 0.5;
+    const emptyStars = 5 - Math.ceil(numRating);
     const stars = [];
 
-    // 3. إضافة النجوم الكاملة
     for (let i = 0; i < fullStars; i++) {
       stars.push(<i key={`full-${i}`} className="fa-solid fa-star"></i>);
     }
 
-    // 4. إضافة نصف نجمة (إذا وجدت)
     if (hasHalfStar) {
       stars.push(<i key="half" className="fa-solid fa-star-half-alt"></i>);
     }
 
-    // 5. إضافة النجوم الفارغة
     for (let i = 0; i < emptyStars; i++) {
       stars.push(<i key={`empty-${i}`} className="fa-regular fa-star"></i>);
     }
 
     return stars;
   };
+
   return (
     <div style={style} className="slide slide-product">
       <div className="container">
@@ -184,7 +200,6 @@ export default function SlideProducts({ title, dis, style, api, path }) {
           {category.length === 0
             ? Array.from({ length: 5 }).map((_, index) => (
                 <SwiperSlide key={index}>
-                  {/* Skeleton Card للمنتج أثناء التحميل */}
                   <div className="products skeleton-card">
                     <div className="skeleton-img"></div>
                     <div className="skeleton-title"></div>
