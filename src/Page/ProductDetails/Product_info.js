@@ -4,34 +4,34 @@ import toast from "react-hot-toast";
 import { accountService } from "../../Components/Apis/accountService";
 import { showError } from "../../Components/Helper/toastCustom";
 import { getSecureCookie } from "../../Components/Helper/cookieUtils";
+
 export default function Product_info({ product }) {
   const [cartItems, setCartItems] = useState([]);
   const [favoriteItems, setFavoriteItems] = useState([]);
-  const userId = Number(getSecureCookie("ith_1854"));
   const token = getSecureCookie("tth_1854");
 
   //---------------------- Get Product From Cart && Favorite ----------------------//
   useEffect(() => {
-    if (token && userId) {
-      // جلب السلة
-      accountService
-        .GetProductsInCart(userId)
-        .then((data) => setCartItems(data?.data || []))
-        .catch(() => {
-          showError("An error occurred while retrieving products from Cart");
-        });
-
-      // جلب المفضلات
-      accountService
-        .GetProductsFromFavorite(userId)
-        .then((data) => setFavoriteItems(data?.data || []))
-        .catch(() => {
-          showError(
-            "An error occurred while retrieving products from Favorite",
-          );
-        });
+    if (!token) {
+      setCartItems([]);
+      setFavoriteItems([]);
+      return;
     }
-  }, [token, userId]);
+
+    accountService
+      .GetProductsInCart()
+      .then((data) => setCartItems(data?.data || []))
+      .catch(() => {
+        showError("An error occurred while retrieving products from Cart");
+      });
+
+    accountService
+      .GetProductsFromFavorite()
+      .then((data) => setFavoriteItems(data?.data || []))
+      .catch(() => {
+        showError("An error occurred while retrieving products from Favorite");
+      });
+  }, [token]);
 
   //---------------------- Check Product Status ----------------------//
   const isInCart = cartItems.some((item) => item.id == product?.id);
@@ -44,17 +44,17 @@ export default function Product_info({ product }) {
       return;
     }
 
-    // 1. تحديث الـ State محلياً فوراً
     setCartItems((prev) => [...prev, product]);
 
-    // 2. إرسال الطلب للسيرفر وإشعار باقي المكونات (مثل الهيدر)
+    // Only productId is sent by the frontend. The backend gets the user id
+    // from the authenticated JWT claims.
     accountService
-      .AddToCart(userId, product.id)
+      .AddToCart(product.id)
       .then(() => window.dispatchEvent(new Event("cartUpdated")))
       .catch((error) => {
         console.error("Error adding product to cart:", error);
-        // التراجع في حال حدوث خطأ
         setCartItems((prev) => prev.filter((item) => item.id != product.id));
+        showError(error.response?.data || "Could not add product to cart");
       });
 
     toast.success(
@@ -86,28 +86,28 @@ export default function Product_info({ product }) {
     const currentlyFav = isInFav(product?.id);
 
     if (!currentlyFav) {
-      // إضافة للمفضلة محلياً
       setFavoriteItems((prev) => [...prev, product]);
 
       accountService
-        .AddToFavorite(userId, product.id)
+        .AddToFavorite(product.id)
         .then(() => window.dispatchEvent(new Event("favUpdated")))
         .catch((error) => {
           console.error("Error adding product to Favorite:", error);
           setFavoriteItems((prev) =>
             prev.filter((fav) => fav.id != product.id),
           );
+          showError(error.response?.data || "Could not add product to Favorite");
         });
     } else {
-      // حذف من المفضلة محلياً
       setFavoriteItems((prev) => prev.filter((fav) => fav.id != product.id));
 
       accountService
-        .RemoveFromFavorIte(userId, product.id)
+        .RemoveFromFavorIte(product.id)
         .then(() => window.dispatchEvent(new Event("favUpdated")))
         .catch((error) => {
           console.error("Error removing product from Favorite:", error);
           setFavoriteItems((prev) => [...prev, product]);
+          showError(error.response?.data || "Could not remove product from Favorite");
         });
     }
   }
@@ -125,34 +125,30 @@ export default function Product_info({ product }) {
       alert("Link copied to clipboard");
     }
   };
+
   //-------------------- handle Total Rating --------------------//
   const renderStars = (rating) => {
     const numRating = parseFloat(rating) || 0;
-
-    // 2. حساب عدد النجوم
-    const fullStars = Math.floor(numRating); // عدد النجوم الكاملة (مثال: 3.5 → 3)
-    const hasHalfStar = numRating % 1 >= 0.5; // هل يوجد نصف نجمة؟ (0.5 فأكثر)
-    const emptyStars = 5 - Math.ceil(numRating); // عدد النجوم الفارغة (مثال: 3.5 → 5 - 4 = 1)
-
+    const fullStars = Math.floor(numRating);
+    const hasHalfStar = numRating % 1 >= 0.5;
+    const emptyStars = 5 - Math.ceil(numRating);
     const stars = [];
 
-    // 3. إضافة النجوم الكاملة
     for (let i = 0; i < fullStars; i++) {
       stars.push(<i key={`full-${i}`} className="fa-solid fa-star"></i>);
     }
 
-    // 4. إضافة نصف نجمة (إذا وجدت)
     if (hasHalfStar) {
       stars.push(<i key="half" className="fa-solid fa-star-half-alt"></i>);
     }
 
-    // 5. إضافة النجوم الفارغة
     for (let i = 0; i < emptyStars; i++) {
       stars.push(<i key={`empty-${i}`} className="fa-regular fa-star"></i>);
     }
 
     return stars;
   };
+
   return (
     <div className="item-name Product_info">
       <title>{product.title + " | Reda store"}</title>
@@ -191,12 +187,11 @@ export default function Product_info({ product }) {
         <div className="icons">
           <i
             onClick={handelFavorite}
-            style={{
-              cursor: "pointer",
-              color: "#008cff",
-            }}
+            style={{ cursor: "pointer", color: "#008cff" }}
             className={
-              isInFav(product?.id) ? "fa-solid fa-heart" : "fa-regular fa-heart"
+              isInFav(product?.id)
+                ? "fa-solid fa-heart"
+                : "fa-regular fa-heart"
             }
           ></i>
           <i
