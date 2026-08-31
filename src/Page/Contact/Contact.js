@@ -53,7 +53,7 @@ export default function Contact() {
       });
 
       // توجيه للصفحة بعد النجاح
-      navigate("/success-content");
+      navigate("/");
     } catch (error) {
       showError(error?.response?.data?.message || "Failed to send message");
     } finally {
