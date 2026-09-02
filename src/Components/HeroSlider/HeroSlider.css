@@ -5,13 +5,11 @@
   margin: auto;
 }
 
-/* يخلي السلايدر مرن */
 .hero-swiper {
   width: 100%;
   height: 100%;
 }
 
-/* مهم عشان الموبايل */
 .swiper {
   width: 100%;
   height: 550px;
@@ -27,7 +25,6 @@
   overflow: hidden;
 }
 
-/* الصورة مرنة */
 .swiper-slide img {
   width: 100%;
   height: 100%;
@@ -35,7 +32,6 @@
   display: block;
 }
 
-/* المحتوى يبقى فوق الصورة */
 .swiper-slide .content {
   position: absolute;
   top: 50%;
@@ -46,18 +42,53 @@
   z-index: 2;
 }
 
-/* مهم جدًا للاستجابة */
-@media (max-width: 768px) {
+/* فون فقط */
+@media (max-width: 480px) {
   .hero {
     width: 100%;
     padding-top: 0;
   }
 
-  .swiper {
-    height: 350px;
+  .hero-swiper {
+    width: 100%;
   }
 
-  .swiper-slide .content {
-    max-width: 90%;
+  .hero .swiper {
+    width: 100%;
+    height: 260px;
+  }
+
+  .hero .swiper-slide {
+    width: 100%;
+  }
+
+  .hero .swiper-slide img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+  }
+
+  .hero .swiper-slide .content {
+    left: 6%;
+    right: 6%;
+    max-width: 88%;
+  }
+
+  .hero .swiper-slide .content h4 {
+    font-size: 14px;
+  }
+
+  .hero .swiper-slide .content h3 {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .hero .swiper-slide .content p {
+    font-size: 11px;
+  }
+
+  .hero .swiper-slide .content .btn {
+    font-size: 11px;
+    padding: 7px 12px;
   }
 }
