@@ -184,7 +184,7 @@ export default function SlideProducts({ title, dis, style, api, path }) {
         <Swiper
           slidesPerView={5}
           breakpoints={{
-            0: { slidesPerView: 1 },
+            0: { slidesPerView: 2 },
             576: { slidesPerView: 2 },
             768: { slidesPerView: 3 },
             992: { slidesPerView: 4 },
