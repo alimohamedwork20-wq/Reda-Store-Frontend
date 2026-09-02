@@ -358,9 +358,11 @@ a {
     width: calc(100% - 12px);
     margin: 6px;
     padding: 18px 10px;
+    position: relative;
   }
 
   .img-products {
+    position: static;
     height: 145px;
     padding: 0 8px;
     margin-bottom: 18px;
@@ -386,12 +388,20 @@ a {
     font-size: 18px;
   }
 
+  /* الأيقونات على أقصى يمين الكارد، بدون ما تخرج برا الكارد */
   .aicons-action {
     right: 8px;
     transform: none;
     top: 25%;
     gap: 12px;
     font-size: 17px;
+    z-index: 3;
+  }
+
+  /* هوفر بسيط ناحية الشمال بدل ما الأيقونات تلزق في الصورة */
+  .products:hover .aicons-action {
+    right: 8px;
+    transform: translateX(-6px);
   }
 
   .slide-product .container .mySwiper .swiper-button-next,
