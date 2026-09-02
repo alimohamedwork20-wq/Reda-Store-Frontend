@@ -21,7 +21,6 @@
   margin: 0 0 6px 0;
 }
 
-/* الخط الأزرق السفلي المماثل لتصميم قسم Mobile */
 .title-underline {
   width: 60px;
   height: 3.5px;
@@ -65,7 +64,6 @@
   border-color: #1d99f2;
 }
 
-/* شارات المنتجات */
 .product-badge {
   position: absolute;
   top: 10px;
@@ -173,8 +171,58 @@
   }
 }
 
+/* فون صغير: يفضل كارتين بدل كارت واحد */
 @media (max-width: 480px) {
   .top-products-grid {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .top-selling-section {
+    padding: 0 10px;
+  }
+
+  .top-product-card {
+    padding: 10px;
+    min-width: 0;
+  }
+
+  .product-badge {
+    top: 7px;
+    right: 7px;
+    font-size: 9px;
+    padding: 3px 5px;
+  }
+
+  .product-img-wrapper {
+    height: 125px;
+    margin-bottom: 8px;
+  }
+
+  .product-title-text {
+    font-size: 12px;
+  }
+
+  .product-rating {
+    font-size: 16px !important;
+  }
+
+  .product-price-row {
+    gap: 6px;
+    align-items: flex-end;
+  }
+
+  .current-price {
+    font-size: 13px;
+  }
+
+  .old-price {
+    font-size: 10px;
+  }
+
+  .buy-now-btn {
+    padding: 5px 7px;
+    font-size: 10px;
+    white-space: nowrap;
   }
 }
