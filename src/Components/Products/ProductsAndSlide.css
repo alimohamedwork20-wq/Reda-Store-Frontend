@@ -340,3 +340,87 @@ a {
     right: 10px;
   }
 }
+
+/* ============================
+   PHONE ONLY - SlideProducts
+   التابلت والكمبيوتر بدون أي تغيير
+   ============================ */
+@media (max-width: 575px) {
+  .slide-product .container .mySwiper {
+    padding: 10px 4px;
+  }
+
+  .slide-product .container .mySwiper .swiper-slide {
+    box-sizing: border-box;
+  }
+
+  .mySwiper .products {
+    width: calc(100% - 12px);
+    margin: 6px;
+    padding: 18px 10px;
+    position: relative;
+  }
+
+  .img-products {
+    position: static;
+    height: 145px;
+    padding: 0 8px;
+    margin-bottom: 18px;
+  }
+
+  .img-products img {
+    height: 130px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .products .name-product {
+    font-size: 14px;
+  }
+
+  .stars {
+    margin: 10px 0;
+    gap: 2px;
+    font-size: 15px;
+  }
+
+  .products .price {
+    font-size: 18px;
+  }
+
+  /* الأيقونات على أقصى يمين الكارد، وموازية لنص الصورة */
+  .aicons-action {
+    right: 8px;
+    transform: none;
+    top: 30%;
+    gap: 12px;
+    font-size: 17px;
+    z-index: 3;
+  }
+
+  /* هوفر بسيط ناحية الشمال بدل ما الأيقونات تلزق في الصورة */
+  .products:hover .aicons-action {
+    right: 8px;
+    transform: translateX(-6px);
+  }
+
+  .slide-product .container .mySwiper .swiper-button-next,
+  .slide-product .container .mySwiper .swiper-button-prev {
+    width: 28px;
+    height: 28px;
+    transform: none;
+  }
+
+  .slide-product .container .mySwiper .swiper-button-next {
+    right: 0;
+  }
+
+  .slide-product .container .mySwiper .swiper-button-prev {
+    left: 0;
+  }
+
+  .slide-product .container .mySwiper .swiper-button-next::after,
+  .slide-product .container .mySwiper .swiper-button-prev::after {
+    font-size: 18px;
+  }
+}
