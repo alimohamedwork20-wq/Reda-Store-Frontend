@@ -43,9 +43,7 @@ export default function SlideProducts({ title, dis, style, api, path }) {
         const res = await accountService.GetProductsFromFavorite();
         setFavoriteItems(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
-        showError(
-          "An error occurred while retrieving products from Favorites",
-        );
+        showError("An error occurred while retrieving products from Favorites");
       }
     };
 
@@ -134,7 +132,9 @@ export default function SlideProducts({ title, dis, style, api, path }) {
         .catch((error) => {
           console.error("Error syncing favorite status:", error);
           setFavoriteItems((prev) => prev.filter((fav) => fav.id != item.id));
-          showError(error.response?.data || "Could not add product to Favorite");
+          showError(
+            error.response?.data || "Could not add product to Favorite",
+          );
         });
     } else {
       setFavoriteItems((prev) => prev.filter((fav) => fav.id != item.id));
@@ -146,7 +146,9 @@ export default function SlideProducts({ title, dis, style, api, path }) {
         .catch((error) => {
           console.error("Error deleting favorite:", error);
           setFavoriteItems((prev) => [...prev, item]);
-          showError(error.response?.data || "Could not remove product from Favorite");
+          showError(
+            error.response?.data || "Could not remove product from Favorite",
+          );
         });
     }
   }

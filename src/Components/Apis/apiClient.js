@@ -9,7 +9,6 @@ const apiClient = axios.create({
   },
 });
 
-// Interceptor: وظيفتها تقفش أي طلب رايح للـ API وتحط فيه الـ Token لو موجود
 apiClient.interceptors.request.use(
   (config) => {
     const token = getSecureCookie("tth_1854");
