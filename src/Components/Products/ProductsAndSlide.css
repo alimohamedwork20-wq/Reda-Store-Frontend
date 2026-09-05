@@ -392,12 +392,11 @@ a {
   .aicons-action {
     right: 8px;
     transform: none;
-    top: 30%;
+    top: 20%;
     gap: 12px;
     font-size: 17px;
     z-index: 3;
   }
-
   /* هوفر بسيط ناحية الشمال بدل ما الأيقونات تلزق في الصورة */
   .products:hover .aicons-action {
     right: 8px;
