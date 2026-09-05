@@ -75,7 +75,10 @@ export default function Cart() {
 
     try {
       await accountService.RemoveFromCart(productId);
-      setHandelCart((prev) => prev + 1);
+      setCartItems((prevItems) =>
+        prevItems.filter((item) => item.id !== productId),
+      );
+
       window.dispatchEvent(new Event("cartUpdated"));
       toast.success("Item removed from cart");
     } catch (error) {
@@ -89,7 +92,7 @@ export default function Cart() {
 
     try {
       await accountService.RemoveAllProductsFromCart();
-      setHandelCart((prev) => prev + 1);
+      setCartItems([]);
       window.dispatchEvent(new Event("cartUpdated"));
       toast.success("Cart cleared");
     } catch (error) {
@@ -101,7 +104,10 @@ export default function Cart() {
   const CartSkeleton = () => (
     <div className="checkout">
       <div className="ordersummary">
-        <div className="skeleton-box" style={{ width: "180px", height: "30px", marginBottom: "20px" }} />
+        <div
+          className="skeleton-box"
+          style={{ width: "180px", height: "30px", marginBottom: "20px" }}
+        />
         <div className="items">
           {[1, 2, 3].map((_, idx) => (
             <div key={idx} className="skeleton-item">
@@ -138,20 +144,31 @@ export default function Cart() {
     <PageTransition>
       <title>Cart | Reda store</title>
       <div className="checkout">
-        <div className="ordersummary">
+        <div
+          style={cartItems.length !== 0 ? {} : { transform: "translateY(20%)" }}
+          className="ordersummary"
+        >
           <h1>Order Summary</h1>
 
           {cartItems.length >= 2 && (
             <p
               onClick={DeleteAllProductsFromCart}
               className="delete-all-btn"
-              style={{ textAlign: "right", color: "red", cursor: "pointer", textDecoration: "underline" }}
+              style={{
+                textAlign: "right",
+                color: "red",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
             >
               delete all
             </p>
           )}
 
-          <div className="items">
+          <div
+            style={cartItems.length !== 0 ? {} : { marginBottom: "50%" }}
+            className="items"
+          >
             {cartItems.length > 0 ? (
               cartItems.map((item, index) => {
                 const qty = Number(item.quantity) || 1;
@@ -165,47 +182,118 @@ export default function Cart() {
                         <h5 className="title">{item.title}</h5>
                         <p className="price">{itemTotalPrice.toFixed(2)}$</p>
                         <div className="control">
-                          <button onClick={() => handleIncrease(item.id, qty)}>+</button>
+                          <button onClick={() => handleIncrease(item.id, qty)}>
+                            +
+                          </button>
                           <span className="quanty">{qty}</span>
                           <button
                             onClick={() => handleDecrease(item.id, qty)}
                             disabled={qty <= 1}
-                            style={{ opacity: qty <= 1 ? 0.5 : 1, cursor: qty <= 1 ? "not-allowed" : "pointer" }}
+                            style={{
+                              opacity: qty <= 1 ? 0.5 : 1,
+                              cursor: qty <= 1 ? "not-allowed" : "pointer",
+                            }}
                           >
                             -
                           </button>
                         </div>
                       </div>
                     </div>
-                    <button className="delete-item" onClick={() => handleDelete(item.id)}>
+                    <button
+                      className="delete-item"
+                      onClick={() => handleDelete(item.id)}
+                    >
                       <i className="fa-solid fa-trash-can"></i>
                     </button>
                   </div>
                 );
               })
             ) : (
-              <h3 style={{ textAlign: "center", marginTop: "20px" }}>Your cart is empty 🛒</h3>
+              <h3 style={{ textAlign: "center", marginTop: "20px" }}>
+                Your cart is empty 🛒
+              </h3>
             )}
           </div>
 
           {cartItems.length > 0 && (
-            <div className="order-table-container" style={{ marginTop: "30px", borderTop: "2px dashed #eee", paddingTop: "20px" }}>
+            <div
+              className="order-table-container"
+              style={{
+                marginTop: "30px",
+                borderTop: "2px dashed #eee",
+                paddingTop: "20px",
+              }}
+            >
               <h3>Order Details Table</h3>
-              <table className="order-table" style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}>
+              <table
+                className="order-table"
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  marginTop: "10px",
+                }}
+              >
                 <thead>
                   <tr style={{ backgroundColor: "#f8f9fa", textAlign: "left" }}>
-                    <th style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>Product</th>
-                    <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "center" }}>Quantity</th>
-                    <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "right" }}>Total Price</th>
+                    <th
+                      style={{
+                        padding: "10px",
+                        borderBottom: "1px solid #ddd",
+                      }}
+                    >
+                      Product
+                    </th>
+                    <th
+                      style={{
+                        padding: "10px",
+                        borderBottom: "1px solid #ddd",
+                        textAlign: "center",
+                      }}
+                    >
+                      Quantity
+                    </th>
+                    <th
+                      style={{
+                        padding: "10px",
+                        borderBottom: "1px solid #ddd",
+                        textAlign: "right",
+                      }}
+                    >
+                      Total Price
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {cartItems.map((item, index) => (
                     <tr key={item.id || index}>
-                      <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>{item.title}</td>
-                      <td style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "center" }}>{Number(item.quantity) || 1}</td>
-                      <td style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "right" }}>
-                        {(Number(item.price || 0) * (Number(item.quantity) || 1)).toFixed(2)}$
+                      <td
+                        style={{
+                          padding: "10px",
+                          borderBottom: "1px solid #ddd",
+                        }}
+                      >
+                        {item.title}
+                      </td>
+                      <td
+                        style={{
+                          padding: "10px",
+                          borderBottom: "1px solid #ddd",
+                          textAlign: "center",
+                        }}
+                      >
+                        {Number(item.quantity) || 1}
+                      </td>
+                      <td
+                        style={{
+                          padding: "10px",
+                          borderBottom: "1px solid #ddd",
+                          textAlign: "right",
+                        }}
+                      >
+                        {(
+                          Number(item.price || 0) * (Number(item.quantity) || 1)
+                        ).toFixed(2)}
+                        $
                       </td>
                     </tr>
                   ))}
@@ -222,8 +310,16 @@ export default function Cart() {
           </div>
 
           <div className="btn-order">
-            <Link to={getSecureCookie("cth_1854") || cartItems.length === 0 ? "/cart" : "/add-card"}>
-              <button onClick={ButtonOrder} type="button">Place Order</button>
+            <Link
+              to={
+                getSecureCookie("cth_1854") || cartItems.length === 0
+                  ? "/cart"
+                  : "/add-card"
+              }
+            >
+              <button onClick={ButtonOrder} type="button">
+                Place Order
+              </button>
             </Link>
           </div>
         </div>
