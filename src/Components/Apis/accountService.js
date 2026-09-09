@@ -17,8 +17,8 @@ export const accountService = {
       OldPassword: oldPassword,
       NewPassword: newPassword,
     }),
-  login: (email, password) =>
-    apiClient.post("Auth/login", { Email: email, Password: password }),
+  login: (emailOrPhone, password) =>
+    apiClient.post("Auth/login", { EmailOrPhone: emailOrPhone, Password: password }),
   register: (email, password, name) =>
     apiClient.post("Auth/register", {
       Email: email,
