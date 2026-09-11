@@ -80,12 +80,12 @@ export default function Account_info() {
   }
 
   //============== Send Otp to Email ==============//
-  async function SendOtpToEmail() {
+  async function SendOtpToEmail(action) {
     if (countdown > 0 || isOtpSending) return;
 
     setIsOtpSending(true);
     try {
-      await accountService.sendOtp(emailUser);
+      await accountService.sendOtp(emailUser, action);
       showSuccess("OTP sent successfully!");
       setCountdown(60);
     } catch (error) {
@@ -329,7 +329,7 @@ export default function Account_info() {
                         pointerEvents:
                           countdown > 0 || isOtpSending ? "none" : "auto",
                       }}
-                      onClick={SendOtpToEmail}
+                      onClick={() => SendOtpToEmail("changeEmail")}
                     >
                       {isOtpSending
                         ? "Sending..."
@@ -434,7 +434,9 @@ export default function Account_info() {
                         pointerEvents:
                           countdown > 0 || isOtpSending ? "none" : "auto",
                       }}
-                      onClick={SendOtpToEmail}
+                      onClick={() =>
+                        SendOtpToEmail(phoneUser ? "changePhone" : "addPhone")
+                      }
                     >
                       {isOtpSending
                         ? "Sending..."

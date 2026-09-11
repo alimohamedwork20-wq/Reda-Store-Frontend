@@ -3,10 +3,17 @@ import React, { useState } from "react";
 import UserManagement from "..//UserManagement/UserManagement";
 import ContactManagement from "../ContactManagement/ContactManagement";
 import ReportsManagement from "../ReportsManagement/ReportsManagement";
+import { getSecureCookie } from "../../../Components/Helper/cookieUtils";
 import "./Dashboard.css";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("all");
+  const userRole = getSecureCookie("rth_1854");
+
+  if (userRole !== "Admin") {
+    window.location.href = "/login";
+    return null;
+  }
 
   return (
     <div className="dashboard-container" dir="rtl">
@@ -19,25 +26,41 @@ const Dashboard = () => {
             className={activeTab === "all" ? "active" : ""}
             onClick={() => setActiveTab("all")}
           >
-            📱 نظرة عامة
+            <i
+              style={{ paddingLeft: "6px" }}
+              className="fa-solid fa-chart-simple"
+            ></i>{" "}
+            نظرة عامة
           </button>
           <button
             className={activeTab === "users" ? "active" : ""}
             onClick={() => setActiveTab("users")}
           >
-            👥 إدارة المستخدمين
+            <i
+              style={{ paddingLeft: "6px" }}
+              className="fa-solid fa-user-group"
+            ></i>{" "}
+            إدارة المستخدمين
           </button>
           <button
             className={activeTab === "contacts" ? "active" : ""}
             onClick={() => setActiveTab("contacts")}
           >
-            💬 التواصل
+            <i
+              style={{ paddingLeft: "6px" }}
+              className="fa-solid fa-message"
+            ></i>{" "}
+            التواصل
           </button>
           <button
             className={activeTab === "reports" ? "active" : ""}
             onClick={() => setActiveTab("reports")}
           >
-            📊 البلاغات
+            <i
+              style={{ paddingLeft: "6px" }}
+              className="fa-solid fa-file-circle-exclamation"
+            ></i>{" "}
+            البلاغات
           </button>
         </nav>
       </aside>

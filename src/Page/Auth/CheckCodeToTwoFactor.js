@@ -7,6 +7,7 @@ export default function CheckCodeToTwoFactor() {
         title: "Two-Factor Authentication",
         submitButtonText: "Verify",
         url: "/",
+        action: "twoFactor",
       }}
     />
   );

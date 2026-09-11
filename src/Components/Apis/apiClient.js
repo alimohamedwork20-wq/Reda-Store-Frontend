@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { getSecureCookie } from "../Helper/cookieUtils";
 const apiClient = axios.create({
-  baseURL: "https://redastore.somee.com/api/",
+  baseURL: "https://localhost:7173/api/",
   headers: {
     "Content-Type": "application/json",
   },

@@ -7,6 +7,7 @@ export default function CheckCodeToResetPassword() {
         title: "Reset Password",
         submitButtonText: "Confirm",
         url: "/reset-password",
+        action: "resetPassword",
       }}
     />
   );

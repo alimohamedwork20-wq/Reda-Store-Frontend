@@ -33,7 +33,7 @@ export default function CheckCode({ props }) {
 
     setIsOtpSending(true);
     try {
-      await accountService.sendOtp(email);
+      await accountService.sendOtp(email, props.action);
       showSuccess("OTP sent successfully!");
       setCountdown(60);
     } catch (error) {
@@ -52,8 +52,9 @@ export default function CheckCode({ props }) {
       const res = await accountService.CheckCodeToResetPassword(
         localStorage.getItem("email"),
         Code,
+        props.action,
       );
-      if (res.data === "Verified") {
+      if (res.data === true) {
         navigate(props.url);
         showSuccess("Verified");
       }
