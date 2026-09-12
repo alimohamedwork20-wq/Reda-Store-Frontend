@@ -3,6 +3,7 @@ import PageTransition from "../../Components/Helper/PageTransition";
 import { accountService } from "../../Components/Apis/accountService";
 import { showError, showSuccess } from "../../Components/Helper/toastCustom";
 import { useNavigate } from "react-router-dom";
+import { setUserCookies } from "../../Components/Helper/cookieUtils";
 
 export default function CheckCode({ props }) {
   const [Code, setCode] = useState("");
@@ -54,9 +55,24 @@ export default function CheckCode({ props }) {
         Code,
         props.action,
       );
-      if (res.data === true) {
+      if (res.data.token || res.data == true) {
+        const userData = res.data;
+        localStorage.removeItem("email");
+        setUserCookies({
+          tth_1854: userData.token,
+          nth_1854: userData.name,
+          eth_1854: userData.email,
+          rth_1854: userData.role,
+          pth_1854: userData.phone || null,
+          ath_1854: userData.avatar || null,
+          tfh_1854: userData.two_Factor,
+        });
+        if (props.action === "twoFactor") {
+          showSuccess(`Welcome back, ${userData.name}!`);
+        } else {
+          showSuccess("Code verified successfully!");
+        }
         navigate(props.url);
-        showSuccess("Verified");
       }
     } catch (err) {
       if (err.response?.status === 400) {

@@ -24,25 +24,25 @@ export default function Login() {
       setLoading(true);
       const res = await accountService.login(Email.trim(), Password.trim());
       const userData = res.data;
-
-      setUserCookies({
-        tth_1854: userData.token,
-        nth_1854: userData.name,
-        eth_1854: userData.email,
-        rth_1854: userData.role,
-        pth_1854: userData.phone || null,
-        ath_1854: userData.avatar || null,
-        tfh_1854: userData.two_Factor,
-      });
-
       // Remove the legacy client-side user id cookie if it exists.
       removeSecureCookie("ith_1854");
 
       if (userData.status === true) {
         if (!userData.two_Factor) {
+          setUserCookies({
+            tth_1854: userData.token,
+            nth_1854: userData.name,
+            eth_1854: userData.email,
+            rth_1854: userData.role,
+            pth_1854: userData.phone || null,
+            ath_1854: userData.avatar || null,
+            tfh_1854: userData.two_Factor,
+          });
           showSuccess(`Welcome back, ${userData.name}!`);
           navigate("/", { replace: true });
         } else {
+          showSuccess("Please verify the code sent to your email");
+          localStorage.setItem("email", userData.email);
           navigate("/two-factor-auth", { replace: true });
         }
       } else if (userData.status === false) {
