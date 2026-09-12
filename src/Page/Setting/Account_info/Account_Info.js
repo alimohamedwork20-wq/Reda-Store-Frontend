@@ -10,21 +10,15 @@ import {
 } from "../../../Components/Helper/cookieUtils";
 
 export default function Account_info() {
-  const [Password, setPassword] = useState("");
-  const [NewPassword, setNewPassword] = useState("");
-  const [ConfirmPassword, setConfirmPassword] = useState("");
   const [Otp, setOtp] = useState("");
   const [NewEmail, setNewEmail] = useState("");
-  const [Loading, setLoading] = useState(false);
   const [LoadingEmail, setLoadingEmail] = useState(false);
   const [LoadingPhone, setLoadingPhone] = useState(false);
-  const [LoadingPassword, setLoadingPassword] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [isOtpSending, setIsOtpSending] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneOtp, setPhoneOtp] = useState("");
   const [phoneCountdown, setPhoneCountdown] = useState(0);
-  const [isPhoneSending, setIsPhoneSending] = useState(false);
   const emailUser = getSecureCookie("eth_1854");
   const userId = Number(getSecureCookie("ith_1854"));
   const phoneUser = getSecureCookie("pth_1854");
@@ -99,6 +93,10 @@ export default function Account_info() {
 
   //============== Change Email ==============//
   async function changeEmail() {
+    if (Otp.length !== 6) {
+      showError("OTP code must be exactly 6 digits.");
+      return;
+    }
     setLoadingEmail(true);
     try {
       const res = await accountService.changeEmail(NewEmail, Otp);
@@ -117,6 +115,13 @@ export default function Account_info() {
   //============== Add Phone ==============//
   async function AddPhone() {
     try {
+      if (phoneOtp.length !== 6) {
+        showError("OTP code must be exactly 6 digits.");
+        return;
+      } else if (phoneNumber.length < 10 || phoneNumber.length > 15) {
+        showError("Phone number must be between 10 and 15 digits.");
+        return;
+      }
       setLoadingPhone(true);
       const res = await accountService.savePhone(
         phoneNumber,
@@ -129,7 +134,7 @@ export default function Account_info() {
         window.location.reload();
       }, 2000);
     } catch (error) {
-      showError(error.response?.data || "Failed to add phone");
+      showError(error.response?.data.detail || "Failed to add phone");
     } finally {
       setLoadingPhone(false);
     }
@@ -138,6 +143,13 @@ export default function Account_info() {
   //============== Update Phone ==============//
   async function UpdatePhone() {
     try {
+      if (phoneOtp.length !== 6) {
+        showError("OTP code must be exactly 6 digits.");
+        return;
+      } else if (phoneNumber.length < 10 || phoneNumber.length > 15) {
+        showError("Phone number must be between 10 and 15 digits.");
+        return;
+      }
       const res = await accountService.savePhone(
         phoneNumber,
         emailUser,
@@ -149,7 +161,7 @@ export default function Account_info() {
         window.location.reload();
       }, 2000);
     } catch (error) {
-      showError(error.response?.data || "Failed to update phone");
+      showError(error.response?.data.detail || "Failed to update phone");
     }
   }
 
@@ -310,7 +322,7 @@ export default function Account_info() {
                     <label
                       style={{
                         color:
-                          countdown > 0 || isOtpSending ? "#888" : "#2f87eb",
+                          countdown > 0 || isOtpSending ? "#888" : "#007bff",
                         cursor:
                           countdown > 0 || isOtpSending
                             ? "not-allowed"
@@ -319,13 +331,11 @@ export default function Account_info() {
                           countdown > 0 || isOtpSending
                             ? "1px solid #ccc"
                             : "1px solid #2490e9c9",
-                        padding: "0px 8px",
-                        borderRadius: "5px",
+                        padding: "4px 10px",
+                        borderRadius: "6px",
                         background:
-                          countdown > 0 || isOtpSending
-                            ? "#e0e0e0"
-                            : "#d1d1d1af",
-                        fontSize: "14px",
+                          countdown > 0 || isOtpSending ? "#f1f5f9" : "#e0f2fe",
+                        fontSize: "13px",
                         pointerEvents:
                           countdown > 0 || isOtpSending ? "none" : "auto",
                       }}
@@ -335,7 +345,7 @@ export default function Account_info() {
                         ? "Sending..."
                         : countdown > 0
                           ? `Resend in ${countdown}s`
-                          : "Send"}
+                          : "Send Code"}
                     </label>
                   </div>
                   <input
@@ -415,7 +425,7 @@ export default function Account_info() {
                     <label
                       style={{
                         color:
-                          countdown > 0 || isOtpSending ? "#888" : "#2f87eb",
+                          countdown > 0 || isOtpSending ? "#888" : "#007bff",
                         cursor:
                           countdown > 0 || isOtpSending
                             ? "not-allowed"
@@ -424,13 +434,11 @@ export default function Account_info() {
                           countdown > 0 || isOtpSending
                             ? "1px solid #ccc"
                             : "1px solid #2490e9c9",
-                        padding: "0px 8px",
-                        borderRadius: "5px",
+                        padding: "4px 10px",
+                        borderRadius: "6px",
                         background:
-                          countdown > 0 || isOtpSending
-                            ? "#e0e0e0"
-                            : "#d1d1d1af",
-                        fontSize: "14px",
+                          countdown > 0 || isOtpSending ? "#f1f5f9" : "#e0f2fe",
+                        fontSize: "13px",
                         pointerEvents:
                           countdown > 0 || isOtpSending ? "none" : "auto",
                       }}
@@ -442,7 +450,7 @@ export default function Account_info() {
                         ? "Sending..."
                         : countdown > 0
                           ? `Resend in ${countdown}s`
-                          : "Send"}
+                          : "Send Code"}
                     </label>
                   </div>
 
