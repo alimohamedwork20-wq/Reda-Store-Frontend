@@ -34,7 +34,7 @@ export default function ResetPasswordPage() {
     try {
       setLoading(true);
       const response = await accountService.ResetPassword(email, Password);
-      if (response.data == "The password was successfully updated") {
+      if (response.data == "The password was successfully updated.") {
         showSuccess("Password reset successfully! Please login.");
         localStorage.removeItem("email");
         setTimeout(() => navigate("/login"), 2000);

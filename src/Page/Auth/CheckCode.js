@@ -55,8 +55,8 @@ export default function CheckCode({ props }) {
         Code,
         props.action,
       );
-      if (res.data.token || res.data == true) {
-        const userData = res.data;
+      const userData = res.data;
+      if (props.action === "twoFactor") {
         localStorage.removeItem("email");
         setUserCookies({
           tth_1854: userData.token,
@@ -67,13 +67,11 @@ export default function CheckCode({ props }) {
           ath_1854: userData.avatar || null,
           tfh_1854: userData.two_Factor,
         });
-        if (props.action === "twoFactor") {
-          showSuccess(`Welcome back, ${userData.name}!`);
-        } else {
-          showSuccess("Code verified successfully!");
-        }
-        navigate(props.url);
+        showSuccess(`Welcome back, ${userData.name}!`);
+      } else {
+        showSuccess("Code verified successfully!");
       }
+      navigate(props.url);
     } catch (err) {
       if (err.response?.status === 400) {
         setError(true);
